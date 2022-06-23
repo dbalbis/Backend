@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Styles -->
+    <link rel="stylesheet" href="../../css/reset.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../../css/styles.css" />
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <title>App ejs</title>
+  </head>
+  <body>
+    <div class="container productosContainer">
+      <% if(respuesta.length > 0){ %>
+
+      <h1 class="listTitle">Productos Disponibles</h1>
+
+      <table class="table tableContainer">
+        <thead>
+          <tr>
+            <th scope="col">Imagen</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Precio</th>
+            <th scope="col">ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% respuesta.forEach(product => { %>
+          <tr>
+            <th scope="row">
+              <img src="<%=product.thumbnail%>" alt="<%=product.title%>" />
+            </th>
+            <td><%=product.title%></td>
+            <td><%=product.price%></td>
+            <td><%=product.id%></td>
+          </tr>
+
+          <% }) %>
+        </tbody>
+      </table>
+
+      <a class="linkVolver" href="/">Volver</a>
+
+      <% } else{ %>
+      <h3>No hay productos!</h3>
+      <a href="/">Volver</a>
+      <% } %>
+    </div>
+  </body>
+</html>

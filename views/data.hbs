@@ -1,0 +1,41 @@
+
+
+
+
+<div class="container productosContainer">
+{{#if respuesta}}
+<h1 class="listTitle">Productos Disponibles</h1>
+
+  
+ <table class="table tableContainer  ">
+  <thead>
+    <tr>
+      <th scope="col">Imagen</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Precio</th>
+      <th scope="col">ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each respuesta}}
+    <tr>
+      <th scope="row"><img src={{this.thumbnail}} alt={{this.title}}></th>
+      <td>{{this.title}}</td>
+      <td>${{this.price}}</td>
+      <td>{{this.id}}</td>
+    </tr>
+    {{/each}}
+</table>
+  
+  
+  <a class="linkVolver" href="/">Volver</a>
+
+
+{{else }}
+  <h3>No hay productos!</h3>
+  <a href="/">Volver</a>
+  
+  {{/if}}
+  </div>
+
+  

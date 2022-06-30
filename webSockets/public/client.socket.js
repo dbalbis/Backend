@@ -72,7 +72,7 @@ const tiempo = new Date();
 const argHora = tiempo.toLocaleTimeString('it-IT');
 
 /* Funcion agregar Mensaje */
-function postMessage() {
+function postMessage2() {
   try {
     const email = chatUserEmail.value;
     const message = chatUserMessage.value;
@@ -88,7 +88,7 @@ function postMessage() {
 /* Evento Mensajes */
 formMessages.addEventListener('submit', (event) => {
   event.preventDefault();
-  postMessage();
+  postMessage2();
   formMessages.reset();
 });
 

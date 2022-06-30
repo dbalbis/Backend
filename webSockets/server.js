@@ -35,6 +35,7 @@ async function escribir() {
 
 io.on('connection', async (socket) => {
   console.log(`Se conecto un usuario: ${socket.id}`);
+  console.log('EL ARRAY TIENE', messages.length);
 
   io.emit('server:envioproductos', data); //envio todos los productos
 

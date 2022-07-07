@@ -58,4 +58,39 @@ router.get('/:id/productos', async (req, res) => {
   }
 });
 
+/* Vaciar Carrito y Eliminarlo */
+router.delete('/:id', async (req, res) => {
+  try {
+    const cartId = Number(req.params.id);
+    const producto = await Cart.deleteCart(cartId);
+    if (!producto) {
+      res.status(404).json({ message: 'Not Found!' });
+    } else {
+      res.status(201).json({ message: 'Carrito eliminado!' });
+    }
+  } catch (error) {
+    console.log(error);
+    res.json({ message: 'Hubo un error' });
+  }
+});
+
+/* Eliminar un producto del carrito */
+router.delete('/:id/productos/:idProduct', async (req, res) => {
+  try {
+    const cartId = Number(req.params.id);
+    const productId = Number(req.params.idProduct);
+
+    const producto = await Cart.deleteProductFromCart(cartId, productId);
+
+    if (producto) {
+      res.status(201).json({ message: 'Producto eliminado!' });
+    } else {
+      res.status(404).json({ message: 'Not Found!' });
+    }
+  } catch (error) {
+    console.log(error);
+    res.json({ message: 'Hubo un error' });
+  }
+});
+
 module.exports = router;

@@ -1,3 +1,4 @@
+const { Console } = require('console');
 const fs = require('fs');
 const path = require('path');
 
@@ -172,16 +173,18 @@ class ContenedorProductos {
           'utf-8'
         )
       );
-      cart.productos.push(producto);
-      const newArray = data.filter((item) => item.id !== cartId);
-      data = [...newArray, cart];
-      await fs.promises.writeFile(
-        path.join(__dirname, `../data/${this.filename}`),
-        JSON.stringify(data)
-      );
-      console.log(otherCarts);
-      console.log('EL CART TIENE', cart);
-      return cart;
+      if (!producto || !cart) {
+      } else {
+        cart.productos.push(producto);
+        const newArray = data.filter((item) => item.id !== cartId);
+        data = [...newArray, cart];
+        await fs.promises.writeFile(
+          path.join(__dirname, `../data/${this.filename}`),
+          JSON.stringify(data)
+        );
+
+        return cart;
+      }
     } catch (error) {
       console.log('Hubo un error', error);
     }
@@ -203,6 +206,67 @@ class ContenedorProductos {
         });
         return elemento;
       } else {
+        return null;
+      }
+    } catch (error) {
+      console.log('Hubo un error', error);
+    }
+  }
+
+  /* Vaciar carrito y eliminarlo */
+  async deleteCart(cartId) {
+    try {
+      let data = await JSON.parse(
+        await fs.promises.readFile(
+          path.join(__dirname, `../data/${this.filename}`),
+          'utf-8'
+        )
+      );
+      if (data.some((data) => data['id'] === cartId)) {
+        const newArray = data.filter((cart) => cart.id !== cartId);
+        data = newArray;
+        if (data.length === 0) {
+          await fs.promises.writeFile(
+            path.join(__dirname, `../data/${this.filename}`),
+            ''
+          );
+        } else {
+          await fs.promises.writeFile(
+            path.join(__dirname, `../data/${this.filename}`),
+            JSON.stringify(data)
+          );
+        }
+        return newArray;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.log('Hubo un error', error);
+    }
+  }
+  /* Eliminar un producto por su id de carrito */
+  async deleteProductFromCart(cartId, productoId) {
+    try {
+      let data = await JSON.parse(
+        await fs.promises.readFile(
+          path.join(__dirname, `../data/${this.filename}`),
+          'utf-8'
+        )
+      );
+      if (data.some((data) => data['id'] === cartId && productoId)) {
+        const index = data.findIndex((element) => element.id == cartId);
+        const finalCart = data[index].productos.filter(
+          (item) => item.id != productoId
+        );
+        console.log(data);
+        data[index].productos = finalCart;
+        await fs.promises.writeFile(
+          path.join(__dirname, `../data/${this.filename}`),
+          JSON.stringify(data)
+        );
+        return finalCart;
+      } else {
+        console.log('SOY EL ELSE');
         return null;
       }
     } catch (error) {

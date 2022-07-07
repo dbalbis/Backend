@@ -13,6 +13,20 @@ app.use(express.static('public'));
 app.use('/api/productos', productsRouter);
 app.use('/api/carrito', cartRouter);
 
+//NO EXISTENCIA ROUTES
+app.use((req, res, next) => {
+  const err = new Error('Not found!');
+  err.status = 404;
+  next(err);
+});
+
+//ERRORES
+app.use((err, req, res, next) => {
+  res
+    .status(err.status || 500)
+    .json({ error: { status: err.status || 500, message: err.message } });
+});
+
 /* Server */
 app.listen(port, (err) => {
   if (err) {

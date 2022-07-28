@@ -97,8 +97,77 @@ class ContenedorMongo {
     try {
       const data = await this.model.find();
       if (data.some((data) => data['id'] === id)) {
-        const product = this.model.deleteMany({ id: `${id}` });
+        const product = this.model.deleteOne({ id: `${id}` });
         return product;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.log('Hubo un error', error);
+    }
+  }
+
+  /* Agregar producto al carrito */
+  async addCarrito(cart, producto, cartId) {
+    try {
+      if (!producto || !cart) {
+        return null;
+      } else {
+        const newProduct = this.model.updateOne(
+          { id: `${cartId}` },
+          { $push: { productos: producto } }
+        );
+
+        return newProduct;
+      }
+    } catch (error) {
+      console.log('Hubo un error', error);
+    }
+  }
+
+  /* Traer todos los productos de un carrito */
+
+  async getAllProductsCart(id) {
+    try {
+      const data = await this.model.find();
+      if (data.some((data) => data['id'] === id)) {
+        const elemento = this.model.findOne({ id: `${id}` });
+
+        return elemento;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.log('Hubo un error', error);
+    }
+  }
+
+  /* Vaciar carrito y eliminarlo */
+  async deleteCart(cartId) {
+    try {
+      const data = await this.model.find();
+      if (data.some((data) => data['id'] === cartId)) {
+        const product = this.model.deleteMany({ id: `${cartId}` });
+
+        return product;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.log('Hubo un error', error);
+    }
+  }
+
+  /* Eliminar un producto por su id de carrito */
+  async deleteProductFromCart(cartId, productoId) {
+    try {
+      const data = await this.model.find();
+      if (data.some((data) => data['id'] === cartId && productoId)) {
+        const delProduct = this.model.updateOne(
+          { id: `${cartId}` },
+          { $pull: { productos: { id: productoId } } }
+        );
+        return delProduct;
       } else {
         return null;
       }

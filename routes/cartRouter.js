@@ -2,12 +2,7 @@ import { Router } from 'express';
 const router = Router();
 
 import { cartModel } from '../daos/index.js';
-
-import ContenedorProductos from '../contenedores/contenedor.js';
-
-/* NUEVA CLASE */
-const Cart = new ContenedorProductos('prodCart.json');
-const Product = new ContenedorProductos('prodData.json');
+import { productsModel } from '../daos/index.js';
 
 /* Create Cart */
 
@@ -32,12 +27,18 @@ router.post('/:id/productos', async (req, res) => {
   try {
     const cartId = Number(req.params.id);
     const productId = Number(req.body.productId);
-    const cart = await Cart.getById(cartId);
-    const producto = await Product.getById(productId);
+    const cart = await cartModel.getById(cartId);
+    const producto = await productsModel.getById(productId);
 
-    await Cart.addCarrito(cart, producto, cartId);
+    const respuesta = await cartModel.addCarrito(cart, producto, cartId);
 
-    res.status(201).json({ message: 'Producto agregado!', cart });
+    if (!respuesta) {
+      res.status(404).json({ message: 'Not found!' });
+    } else {
+      res
+        .status(201)
+        .json({ message: 'Producto agregado al carrito!', producto });
+    }
   } catch (error) {
     console.log(error);
     res.json({ message: 'Hubo un error' });
@@ -48,7 +49,7 @@ router.post('/:id/productos', async (req, res) => {
 router.get('/:id/productos', async (req, res) => {
   try {
     const cartId = Number(req.params.id);
-    const producto = await Cart.getAllProductsCart(cartId);
+    const producto = await cartModel.getAllProductsCart(cartId);
     if (!producto) {
       res.status(404).json({ message: 'Not Found!' });
     } else {
@@ -64,7 +65,7 @@ router.get('/:id/productos', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   try {
     const cartId = Number(req.params.id);
-    const producto = await Cart.deleteCart(cartId);
+    const producto = await cartModel.deleteCart(cartId);
     if (!producto) {
       res.status(404).json({ message: 'Not Found!' });
     } else {
@@ -82,7 +83,7 @@ router.delete('/:id/productos/:idProduct', async (req, res) => {
     const cartId = Number(req.params.id);
     const productId = Number(req.params.idProduct);
 
-    const producto = await Cart.deleteProductFromCart(cartId, productId);
+    const producto = await cartModel.deleteProductFromCart(cartId, productId);
 
     if (producto) {
       res.status(201).json({ message: 'Producto eliminado!' });

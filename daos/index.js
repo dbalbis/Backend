@@ -20,6 +20,15 @@ switch (DATABASE) {
 
     break;
 
+  case 'firebase':
+    const { default: productsModelDaoFirebase } = await import(
+      './productos/productoDaoFireBase.js'
+    );
+
+    productsModel = productsModelDaoFirebase;
+
+    break;
+
   default:
     break;
 }

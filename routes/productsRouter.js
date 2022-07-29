@@ -25,7 +25,8 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const id = Number(req.params.id);
-    const producto = await productsModel.getById(id);
+    const idFirebase = req.params.id;
+    const producto = await productsModel.getById(id, idFirebase);
     if (!producto) {
       res.status(404).json({ message: 'Not Found!' });
     } else {
@@ -64,6 +65,7 @@ router.post('/', adminChecker, async (req, res) => {
 router.put('/:id', adminChecker, async (req, res) => {
   try {
     const id = Number(req.params.id);
+    const idFirebase = req.params.id;
     const { nombre, descripcion, codigo, foto, precio, stock } = req.body;
     const prod = {
       id,
@@ -79,6 +81,7 @@ router.put('/:id', adminChecker, async (req, res) => {
     } else {
       const producto = await productsModel.editProduct(
         id,
+        idFirebase,
         nombre,
         descripcion,
         codigo,
@@ -101,7 +104,8 @@ router.put('/:id', adminChecker, async (req, res) => {
 /* Eliminar un Producto */
 router.delete('/:id', adminChecker, async (req, res) => {
   const id = Number(req.params.id);
-  const producto = await productsModel.deleteProduct(id);
+  const idFirebase = req.params.id;
+  const producto = await productsModel.deleteProduct(id, idFirebase);
   if (!producto) {
     res.status(404).json({ message: 'Not Found!' });
   } else {

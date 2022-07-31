@@ -24,8 +24,12 @@ switch (DATABASE) {
     const { default: productsModelDaoFirebase } = await import(
       './productos/productoDaoFireBase.js'
     );
+    const { default: cartModelDaoFirebase } = await import(
+      './carritos/carritoDaoFirebase.js'
+    );
 
     productsModel = productsModelDaoFirebase;
+    cartModel = cartModelDaoFirebase;
 
     break;
 

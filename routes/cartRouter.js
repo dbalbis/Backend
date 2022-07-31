@@ -27,10 +27,20 @@ router.post('/:id/productos', async (req, res) => {
   try {
     const cartId = Number(req.params.id);
     const productId = Number(req.body.productId);
-    const cart = await cartModel.getById(cartId);
-    const producto = await productsModel.getById(productId);
+    /* FIREBASE */
+    const cartIdFbase = req.params.id;
+    const cartIdFirebase = req.params.id;
+    const productIdFirebase = req.body.productId;
+    const cart = await cartModel.getById(cartId, cartIdFirebase);
+    const producto = await productsModel.getById(productId, productIdFirebase);
 
-    const respuesta = await cartModel.addCarrito(cart, producto, cartId);
+    const respuesta = await cartModel.addCarrito(
+      cart,
+      producto,
+      cartId,
+      cartIdFirebase,
+      cartIdFbase
+    );
 
     if (!respuesta) {
       res.status(404).json({ message: 'Not found!' });
@@ -49,7 +59,8 @@ router.post('/:id/productos', async (req, res) => {
 router.get('/:id/productos', async (req, res) => {
   try {
     const cartId = Number(req.params.id);
-    const producto = await cartModel.getAllProductsCart(cartId);
+    const cartIdFirebase = req.params.id;
+    const producto = await cartModel.getAllProductsCart(cartId, cartIdFirebase);
     if (!producto) {
       res.status(404).json({ message: 'Not Found!' });
     } else {
@@ -65,7 +76,8 @@ router.get('/:id/productos', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   try {
     const cartId = Number(req.params.id);
-    const producto = await cartModel.deleteCart(cartId);
+    const cartIdFirebase = req.params.id;
+    const producto = await cartModel.deleteCart(cartId, cartIdFirebase);
     if (!producto) {
       res.status(404).json({ message: 'Not Found!' });
     } else {
@@ -82,8 +94,16 @@ router.delete('/:id/productos/:idProduct', async (req, res) => {
   try {
     const cartId = Number(req.params.id);
     const productId = Number(req.params.idProduct);
+    /* FIREBASE */
+    const cartIdFirebase = req.params.id;
+    const productIdFirebase = req.params.id;
 
-    const producto = await cartModel.deleteProductFromCart(cartId, productId);
+    const producto = await cartModel.deleteProductFromCart(
+      cartId,
+      productId,
+      cartIdFirebase,
+      productIdFirebase
+    );
 
     if (producto) {
       res.status(201).json({ message: 'Producto eliminado!' });

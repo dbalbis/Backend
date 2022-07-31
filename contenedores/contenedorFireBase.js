@@ -112,6 +112,64 @@ class ContenedorFirebase {
       console.log('Hubo un error', error);
     }
   }
+
+  /* Agregar producto al carrito */
+  async addCarrito(cart, producto, cartId, cartIdFirebase, cartIdFbase) {
+    try {
+      const doc = this.collection.doc(cartIdFbase);
+      await doc.update({
+        productos: admin.firestore.FieldValue.arrayUnion(producto),
+      });
+      return doc;
+    } catch (error) {
+      console.log('Hubo un error', error);
+    }
+  }
+
+  /* Traer todos los productos de un carrito */
+
+  async getAllProductsCart(id, cartIdFirebase) {
+    try {
+      const doc = await this.collection.doc(cartIdFirebase).get();
+      const response = doc.data();
+      return response;
+    } catch (error) {
+      console.log('Hubo un error', error);
+    }
+  }
+
+  /* Vaciar carrito y eliminarlo */
+  async deleteCart(cartId, cartIdFirebase) {
+    try {
+      const doc = this.collection.doc(cartIdFirebase);
+      if (doc) {
+        await doc.delete();
+        return doc;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.log('Hubo un error', error);
+    }
+  }
+
+  /* Eliminar un producto por su id de carrito */
+  async deleteProductFromCart(
+    cartId,
+    productId,
+    cartIdFirebase,
+    productIdFirebase
+  ) {
+    try {
+      const doc = this.collection.doc(cartIdFirebase);
+      await doc.update({
+        productos: admin.firestore.FieldValue.arrayRemove({ _id: productId }),
+      });
+      return doc;
+    } catch (error) {
+      console.log('Hubo un error', error);
+    }
+  }
 }
 
 export default ContenedorFirebase;

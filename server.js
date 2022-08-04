@@ -2,9 +2,10 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const { Server: IOServer } = require('socket.io');
+const { createServer } = require('http');
 const productsManager = require('./controllers/contenedor');
-const productsTest = require('./public/productTest');
 const messagesManager = require('./controllers/contenedormensajes');
+const routes = require('./routes/index.js');
 /* SQLITE3 MENSAJES*/
 const configSqlDB = require('./sqlite3');
 const messagesContainer = new messagesManager(configSqlDB, 'message');
@@ -20,12 +21,9 @@ const serverExpress = app.listen(PORT, (err) =>
 );
 
 const io = new IOServer(serverExpress);
-
+/* ROUTES */
+app.use('/', routes);
 app.use(express.static(path.join(__dirname, '/public')));
-
-/* Rutas productos - test */
-
-app.use('/api/products-test', productsTest);
 
 io.on('connection', async (socket) => {
   console.log(`Socket ID: ${socket.id} connected`);

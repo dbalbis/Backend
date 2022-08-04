@@ -76,7 +76,7 @@ function postMessage2() {
   try {
     const email = chatUserEmail.value;
     const message = chatUserMessage.value;
-    
+
     const messageObject = { email, message };
 
     socket.emit('client:enviomessage', messageObject);
@@ -89,6 +89,7 @@ function postMessage2() {
 formMessages.addEventListener('submit', (event) => {
   event.preventDefault();
   postMessage2();
+
   formMessages.reset();
 });
 
@@ -110,6 +111,32 @@ async function renderMessages(messages) {
       .join(' ');
 
     messagesPool.innerHTML = html;
+  } catch (error) {
+    console.log('Hubo un error', error);
+  }
+}
+
+//RENDER Productos E INSERTO HTML
+
+const testPool = document.querySelector('.testPool');
+
+async function renderProducts() {
+  try {
+    let productsArray = [];
+
+    fetch('api/products-test')
+      .then((product) => product.json())
+      .then((json) => (productsArray = json));
+    const response = await fetch('/template-test.hbs');
+    const templateHbs = await response.text();
+
+    data.forEach((product) => {
+      const template = Handlebars.compile(templateHbs);
+
+      const html = template(product);
+
+      testPool.innerHTML += html;
+    });
   } catch (error) {
     console.log('Hubo un error', error);
   }

@@ -3,6 +3,7 @@ const app = express();
 const path = require('path');
 const { Server: IOServer } = require('socket.io');
 const productsManager = require('./controllers/contenedor');
+const productsTest = require('./public/productTest');
 const messagesManager = require('./controllers/contenedormensajes');
 /* SQLITE3 MENSAJES*/
 const configSqlDB = require('./sqlite3');
@@ -22,6 +23,10 @@ const io = new IOServer(serverExpress);
 
 app.use(express.static(path.join(__dirname, '/public')));
 
+/* Rutas productos - test */
+
+app.use('/api/products-test', productsTest);
+
 io.on('connection', async (socket) => {
   console.log(`Socket ID: ${socket.id} connected`);
   /* PRODUCTOS */
@@ -39,7 +44,7 @@ io.on('connection', async (socket) => {
   socket.emit('server:enviomessages', messages); //envio CHATS a todos los usuarios
   socket.on('client:enviomessage', async (messageObject) => {
     const { email, message } = messageObject;
-    date = new Date().toLocaleDateString()
+    date = new Date().toLocaleDateString();
     await messagesContainer.newMessages(email, date, message); //RECIBO mensaje y lo anido
     const messages = await messagesContainer.getAllMessages();
     io.emit('server:enviomessages', messages); //EMITO CHATS

@@ -81,6 +81,23 @@ app.get('/api/login', (req, res) => {
   }
 });
 
+app.get('/logout', authMiddleware, (req, res) => {
+  res.send(`<h1>Hasta luego ${req.session.username}</h1>
+  <script type="text/javascript">
+  setTimeout(function(){ location.href = '/'},2000)
+  </script>`);
+  req.session.destroy((err) => {
+    if (err) {
+      console.log('error en el Logout:', err);
+    }
+  });
+});
+
+/* PARA OBTENER EL NOMBRE DE USUARIO :( */
+app.get('/api/user-info', (req, res) => {
+  res.json({ username: req.session.username });
+});
+
 /* SOCKET */
 
 const io = new IOServer(serverExpress);

@@ -115,4 +115,27 @@ async function renderMessages(messages) {
   }
 }
 
+/* RENDER NOMBRE */
 
+const userPool = document.querySelector('.homeTitle');
+
+async function insertUser() {
+  let userName;
+  await fetch('/api/user-info')
+    .then((user) => user.json())
+    .then((json) => (userName = json));
+
+  console.log('userName', userName);
+  const response = await fetch('/login.hbs');
+  const logInPlantilla = await response.text();
+  const template = Handlebars.compile(logInPlantilla);
+  const html = template(userName);
+
+  if (JSON.stringify(userName) === '{}') {
+    const html = `Bienvenid@ <a href="/login">LogIN</a> `;
+    userPool.innerHTML += html;
+  } else {
+    userPool.innerHTML += html;
+  }
+}
+insertUser();

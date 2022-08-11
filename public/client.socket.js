@@ -132,7 +132,7 @@ async function insertUser() {
   const html = template(userName);
 
   if (JSON.stringify(userName) === '{}') {
-    const html = `Bienvenid@ <a href="/login">LogIN</a> `;
+    const html = `Bienvenid@ <a href="/login">Ingresar</a> `;
     userPool.innerHTML += html;
   } else {
     userPool.innerHTML += html;

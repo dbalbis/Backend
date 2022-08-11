@@ -23,16 +23,71 @@ const serverExpress = app.listen(PORT, (err) =>
     : console.log(`Server listening on PORT: ${PORT}`)
 );
 
-const io = new IOServer(serverExpress);
+const mongoOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 
-app.use(express.static(path.join(__dirname, '/public')));
-app.use(cookieParser);
-app.use(session({
-  store: MongoStore.create({mongoUrl})
-}))
+app.use(express.static(`${__dirname}/public`));
+app.use(express.json());
+app.use(cookieParser());
+app.use(
+  session({
+    store: MongoStore.create({
+      mongoUrl:
+        'mongodb+srv://dbalbis:44516235@cluster0.bnrauug.mongodb.net/db?retryWrites=true&w=majority',
+      mongoOptions,
+    }),
+    secret: 'coderhouse',
+    resave: false,
+    saveUninitialized: false,
+    rolling: true, // Reinicia el tiempo de expiracion con cada request
+    cookie: {
+      maxAge: 30000,
+    },
+  })
+);
+
+/* CHECKER */
+
+function loginMiddleware(req, res, next) {
+  if (req.session.username) {
+    res.redirect('/');
+  } else {
+    next();
+  }
+}
+
+function authMiddleware(req, res, next) {
+  if (req.session.username) {
+    next();
+  } else {
+    res.redirect('/login');
+  }
+}
+
+/* RUTAS */
+
+app.get('/login', loginMiddleware, (req, res) => {
+  res.sendFile(path.join(__dirname, './public/login.html'));
+});
+
+app.get('/', authMiddleware, (req, res) => {});
+
+app.get('/api/login', (req, res) => {
+  try {
+    console.log('El usuario es:', req.query.username);
+    req.session.username = req.query.username;
+    res.redirect('/');
+  } catch (err) {
+    res.json({ error: true, message: err });
+  }
+});
+
+/* SOCKET */
+
+const io = new IOServer(serverExpress);
 
 io.on('connection', async (socket) => {
   console.log(`Socket ID: ${socket.id} connected`);
+
   /* PRODUCTOS */
   const data = await productsContainer.getAll();
   socket.emit('server:envioproductos', data);

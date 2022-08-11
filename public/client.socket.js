@@ -76,7 +76,7 @@ function postMessage2() {
   try {
     const email = chatUserEmail.value;
     const message = chatUserMessage.value;
-    
+
     const messageObject = { email, message };
 
     socket.emit('client:enviomessage', messageObject);

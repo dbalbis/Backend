@@ -10,6 +10,11 @@ const messagesContainer = new messagesManager(configSqlDB, 'message');
 /* MARIA DB - PRODUCTOS */
 const configMariaDB = require('./mariadb');
 const productsContainer = new productsManager(configMariaDB, 'product');
+/* MONGO STORE SESION Y COOKIE PARSER */
+
+const MongoStore = require('connect-mongo');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
 
 const PORT = process.env.PORT || 8080;
 const serverExpress = app.listen(PORT, (err) =>
@@ -21,6 +26,10 @@ const serverExpress = app.listen(PORT, (err) =>
 const io = new IOServer(serverExpress);
 
 app.use(express.static(path.join(__dirname, '/public')));
+app.use(cookieParser);
+app.use(session({
+  store: MongoStore.create({mongoUrl})
+}))
 
 io.on('connection', async (socket) => {
   console.log(`Socket ID: ${socket.id} connected`);
@@ -39,7 +48,7 @@ io.on('connection', async (socket) => {
   socket.emit('server:enviomessages', messages); //envio CHATS a todos los usuarios
   socket.on('client:enviomessage', async (messageObject) => {
     const { email, message } = messageObject;
-    date = new Date().toLocaleDateString()
+    date = new Date().toLocaleDateString();
     await messagesContainer.newMessages(email, date, message); //RECIBO mensaje y lo anido
     const messages = await messagesContainer.getAllMessages();
     io.emit('server:enviomessages', messages); //EMITO CHATS

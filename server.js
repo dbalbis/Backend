@@ -76,6 +76,10 @@ function hashPassword(password) {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 }
 
+function isValidPassword(reqPassword, hashedPassword) {
+  return bcrypt.compareSync(reqPassword, hashedPassword);
+}
+
 const signupStrategy = new LocalStrategy(
   { passReqToCallback: true },
 
@@ -85,7 +89,7 @@ const signupStrategy = new LocalStrategy(
       const existingUser = await User.findOne({ username: username });
 
       if (existingUser) {
-        return done('User already exists', false);
+        return done(`Usuario ya registrado!`, false);
       }
 
       const newUser = {
@@ -104,7 +108,18 @@ const signupStrategy = new LocalStrategy(
   }
 );
 
+const loginStrategy = new LocalStrategy(async (username, password, done) => {
+  const user = await User.findOne({ username: username });
+
+  if (!user || !isValidPassword(password, user.password)) {
+    return done('Invalid credentials', null);
+  }
+
+  return done(null, user);
+});
+
 passport.use('register', signupStrategy);
+passport.use('login', loginStrategy);
 
 /* Conectamos MONGO */
 mongoose.connect(
@@ -143,7 +158,7 @@ function authMiddleware(req, res, next) {
 
 /****  RUTAS ******/
 
-/* SIGNUP */
+/* REGISTER */
 app.get('/register', loginMiddleware, (req, res) => {
   res.sendFile(path.join(__dirname, './public/signup.html'));
 });
@@ -154,9 +169,25 @@ app.post(
   routes.postSignup
 );
 
+app.get('/failsignup', routes.getFailsignup);
+
+/* LOGIN */
+
 app.get('/login', loginMiddleware, (req, res) => {
   res.sendFile(path.join(__dirname, './public/login.html'));
 });
+
+app.post(
+  '/login',
+  passport.authenticate('login', { failureRedirect: '/failsignup' }),
+  routes.getLogin
+);
+
+app.get('/login', loginMiddleware, (req, res) => {
+  res.sendFile(path.join(__dirname, './public/login.html'));
+});
+
+app.get('/faillogin', routes.getFaillogin);
 
 app.get('/api/login', (req, res) => {
   try {
@@ -167,9 +198,6 @@ app.get('/api/login', (req, res) => {
     res.json({ error: true, message: err });
   }
 });
-
-/* Fail register */
-app.get('/failsignup', routes.getFailsignup);
 
 app.get('/', authMiddleware, (req, res) => {});
 

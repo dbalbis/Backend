@@ -13,6 +13,7 @@ body div.formContainer {
   height: auto;
   border-radius: 3%;
   border: solid 5px #fbbc05;
+  margin-bottom: 15px;
 }
 
 body div.chatContainer {
@@ -158,6 +159,10 @@ div.productosContainer a.linkVolver {
 }
 
 div.messagesPool {
+  text-align: center;
+}
+
+p.backLink {
   text-align: center;
 }
 /*# sourceMappingURL=styles.css.map */

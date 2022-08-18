@@ -15,6 +15,24 @@ const productsContainer = new productsManager(configMariaDB, 'product');
 const MongoStore = require('connect-mongo');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+/* Passport */
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+
+/* Users */
+const User = require('./models');
+
+/* Bcrypt */
+
+const bcrypt = require('bcrypt');
+
+/* Routes */
+
+const routes = require('./routes/routes');
+
+/* Mongoose */
+
+const mongoose = require('mongoose');
 
 const PORT = process.env.PORT || 8080;
 const serverExpress = app.listen(PORT, (err) =>
@@ -23,10 +41,20 @@ const serverExpress = app.listen(PORT, (err) =>
     : console.log(`Server listening on PORT: ${PORT}`)
 );
 
+/* Conectamos MONGO */
+mongoose.connect(
+  'mongodb+srv://dbalbis:44516235@cluster0.bnrauug.mongodb.net/db?retryWrites=true&w=majority',
+  (err, res) => {
+    if (err) throw err;
+    return console.log('Base de datos MONGO conectada.');
+  }
+);
+
 const mongoOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 
 app.use(express.static(`${__dirname}/public`));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(
   session({
@@ -40,10 +68,59 @@ app.use(
     saveUninitialized: false,
     rolling: true, // Reinicia el tiempo de expiracion con cada request
     cookie: {
-      maxAge: 30000,
+      maxAge: 600000,
+      httpOnly: false,
+      secure: false,
     },
   })
 );
+
+/* Passport */
+app.use(passport.initialize());
+app.use(passport.session());
+
+/* HashPassword */
+
+function hashPassword(password) {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+}
+
+const signupStrategy = new LocalStrategy(
+  { passReqToCallback: true },
+
+  async (req, username, password, done) => {
+    try {
+      console.log('Estoy aca!');
+      const existingUser = await User.findOne({ username: username });
+
+      if (existingUser) {
+        return done('User already exists', false);
+      }
+
+      const newUser = {
+        username: req.body.username,
+        password: hashPassword(password),
+      };
+
+      const createdUser = await User.create(newUser);
+
+      return done(null, createdUser);
+    } catch (err) {
+      console.log(err);
+      done(err);
+    }
+  }
+);
+
+passport.use('register', signupStrategy);
+
+passport.serializeUser((user, done) => {
+  done(null, user._id);
+});
+
+passport.deserializeUser((id, done) => {
+  User.findById(id, done);
+});
 
 /* CHECKER */
 
@@ -63,13 +140,22 @@ function authMiddleware(req, res, next) {
   }
 }
 
-/* RUTAS */
+/****  RUTAS ******/
+
+/* SIGNUP */
+app.get('/register', loginMiddleware, (req, res) => {
+  res.sendFile(path.join(__dirname, './public/signup.html'));
+});
+
+app.post(
+  '/register',
+  passport.authenticate('register', { failureRedirect: '/failsignup' }),
+  routes.postSignup
+);
 
 app.get('/login', loginMiddleware, (req, res) => {
   res.sendFile(path.join(__dirname, './public/login.html'));
 });
-
-app.get('/', authMiddleware, (req, res) => {});
 
 app.get('/api/login', (req, res) => {
   try {
@@ -80,6 +166,11 @@ app.get('/api/login', (req, res) => {
     res.json({ error: true, message: err });
   }
 });
+
+/* Fail register */
+app.get('/failsignup', routes.getFailsignup);
+
+app.get('/', authMiddleware, (req, res) => {});
 
 app.get('/logout', authMiddleware, (req, res) => {
   res.send(`<h1>Hasta luego ${req.session.username}</h1>

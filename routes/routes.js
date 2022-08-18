@@ -4,8 +4,9 @@ const path = require('path');
 function getRoot(req, res) {}
 
 function postSignup(req, res) {
-  var user = req.user;
+  const user = req.user;
   console.log('El user es', user);
+  res.redirect('/');
 }
 
 function getFailsignup(req, res) {
@@ -14,6 +15,6 @@ function getFailsignup(req, res) {
 }
 
 module.exports = {
-  postSignup,
   getFailsignup,
+  postSignup,
 };

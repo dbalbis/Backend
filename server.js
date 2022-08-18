@@ -15,6 +15,7 @@ const productsContainer = new productsManager(configMariaDB, 'product');
 const MongoStore = require('connect-mongo');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+
 /* Passport */
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
@@ -33,23 +34,6 @@ const routes = require('./routes/routes');
 /* Mongoose */
 
 const mongoose = require('mongoose');
-
-const PORT = process.env.PORT || 8080;
-const serverExpress = app.listen(PORT, (err) =>
-  err
-    ? console.log(`Error en el server: ${err}`)
-    : console.log(`Server listening on PORT: ${PORT}`)
-);
-
-/* Conectamos MONGO */
-mongoose.connect(
-  'mongodb+srv://dbalbis:44516235@cluster0.bnrauug.mongodb.net/db?retryWrites=true&w=majority',
-  (err, res) => {
-    if (err) throw err;
-    return console.log('Base de datos MONGO conectada.');
-  }
-);
-
 const mongoOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 
 app.use(express.static(`${__dirname}/public`));
@@ -79,6 +63,13 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+const PORT = process.env.PORT || 8080;
+const serverExpress = app.listen(PORT, (err) =>
+  err
+    ? console.log(`Error en el server: ${err}`)
+    : console.log(`Server listening on PORT: ${PORT}`)
+);
+
 /* HashPassword */
 
 function hashPassword(password) {
@@ -99,6 +90,7 @@ const signupStrategy = new LocalStrategy(
 
       const newUser = {
         username: req.body.username,
+        email: req.body.email,
         password: hashPassword(password),
       };
 
@@ -113,6 +105,15 @@ const signupStrategy = new LocalStrategy(
 );
 
 passport.use('register', signupStrategy);
+
+/* Conectamos MONGO */
+mongoose.connect(
+  'mongodb+srv://dbalbis:44516235@cluster0.bnrauug.mongodb.net/db?retryWrites=true&w=majority',
+  (err, res) => {
+    if (err) throw err;
+    return console.log('Base de datos MONGO conectada.');
+  }
+);
 
 passport.serializeUser((user, done) => {
   done(null, user._id);

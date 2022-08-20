@@ -29,9 +29,20 @@ function getFaillogin(req, res) {
   res.sendFile(path.join(__dirname, '../public/faillogin.html'));
 }
 
+function getLogout(req, res) {
+  req.logout();
+  res.sendFile(path.join(__dirname, '../public/index.html'));
+}
+
+function failRoute(req, res) {
+  res.redirect('/');
+}
+
 module.exports = {
   getFailsignup,
   postSignup,
   getLogin,
   getFaillogin,
+  getLogout,
+  failRoute,
 };

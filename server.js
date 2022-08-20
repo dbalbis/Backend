@@ -158,8 +158,28 @@ function authMiddleware(req, res, next) {
 
 /****  RUTAS ******/
 
+/* AuthCheck */
+
+function checkAuthSI(req, res, next) {
+  if (req.isAuthenticated()) {
+    res.redirect('/');
+  } else {
+    next();
+  }
+}
+
+function checkAuthNo(req, res, next) {
+  if (req.isAuthenticated()) {
+    next();
+  } else {
+    res.redirect('/');
+  }
+}
+
+/* NO */
+
 /* REGISTER */
-app.get('/register', loginMiddleware, (req, res) => {
+app.get('/register', checkAuthSI, (req, res) => {
   res.sendFile(path.join(__dirname, './public/signup.html'));
 });
 
@@ -169,11 +189,11 @@ app.post(
   routes.postSignup
 );
 
-app.get('/failsignup', routes.getFailsignup);
+app.get('/failsignup', checkAuthSI, routes.getFailsignup);
 
 /* LOGIN */
 
-app.get('/login', loginMiddleware, (req, res) => {
+app.get('/login', checkAuthSI, (req, res) => {
   res.sendFile(path.join(__dirname, './public/login.html'));
 });
 
@@ -183,40 +203,35 @@ app.post(
   routes.getLogin
 );
 
-app.get('/login', loginMiddleware, (req, res) => {
-  res.sendFile(path.join(__dirname, './public/login.html'));
-});
+app.get('/faillogin', checkAuthSI, routes.getFaillogin);
 
-app.get('/faillogin', routes.getFaillogin);
+app.get('/', (req, res) => {});
 
-app.get('/api/login', (req, res) => {
-  try {
-    console.log('El usuario es:', req.query.username);
-    req.session.username = req.query.username;
-    res.redirect('/');
-  } catch (err) {
-    res.json({ error: true, message: err });
-  }
-});
-
-app.get('/', authMiddleware, (req, res) => {});
-
-app.get('/logout', authMiddleware, (req, res) => {
-  res.send(`<h1>Hasta luego ${req.session.username}</h1>
+app.get('/logout', checkAuthNo, (req, res) => {
+  let user = req.user.username;
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.send(`<h1>Hasta luego ${user}</h1>
   <script type="text/javascript">
   setTimeout(function(){ location.href = '/'},2000)
   </script>`);
-  req.session.destroy((err) => {
-    if (err) {
-      console.log('error en el Logout:', err);
-    }
   });
 });
-
 /* PARA OBTENER EL NOMBRE DE USUARIO :( */
 app.get('/api/user-info', (req, res) => {
-  res.json({ username: req.session.username });
+  if (req.user) {
+    let user = req.user.username;
+    let email = req.user.email;
+    res.json({ username: user, email: email });
+  } else {
+    res.json({});
+  }
 });
+
+//  FAIL ROUTE
+app.get('*', routes.failRoute);
 
 /* SOCKET */
 

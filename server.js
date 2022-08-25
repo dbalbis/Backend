@@ -23,9 +23,13 @@ const LocalStrategy = require('passport-local').Strategy;
 /* Users */
 const User = require('./models');
 
-/* Bcrypt */
+/* Auth */
 
-const bcrypt = require('bcrypt');
+const { checkAuth, checkAuthLogout } = require('./middlewares/checkauth');
+
+/* Hash Password */
+
+const { hashPassword, isValidPassword } = require('./utils/hashpassword');
 
 /* Routes */
 
@@ -69,16 +73,6 @@ const serverExpress = app.listen(PORT, (err) =>
     ? console.log(`Error en el server: ${err}`)
     : console.log(`Server listening on PORT: ${PORT}`)
 );
-
-/* HashPassword */
-
-function hashPassword(password) {
-  return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
-}
-
-function isValidPassword(reqPassword, hashedPassword) {
-  return bcrypt.compareSync(reqPassword, hashedPassword);
-}
 
 const signupStrategy = new LocalStrategy(
   { passReqToCallback: true },
@@ -138,48 +132,10 @@ passport.deserializeUser((id, done) => {
   User.findById(id, done);
 });
 
-/* CHECKER */
-
-function loginMiddleware(req, res, next) {
-  if (req.session.username) {
-    res.redirect('/');
-  } else {
-    next();
-  }
-}
-
-function authMiddleware(req, res, next) {
-  if (req.session.username) {
-    next();
-  } else {
-    res.redirect('/login');
-  }
-}
-
 /****  RUTAS ******/
 
-/* AuthCheck */
-
-function checkAuthSI(req, res, next) {
-  if (req.isAuthenticated()) {
-    res.redirect('/');
-  } else {
-    next();
-  }
-}
-
-function checkAuthNo(req, res, next) {
-  if (req.isAuthenticated()) {
-    next();
-  } else {
-    res.redirect('/');
-  }
-}
-
-/* NO */
-
 /* REGISTER */
-app.get('/register', checkAuthSI, (req, res) => {
+app.get('/register', checkAuth, (req, res) => {
   res.sendFile(path.join(__dirname, './public/signup.html'));
 });
 
@@ -189,11 +145,11 @@ app.post(
   routes.postSignup
 );
 
-app.get('/failsignup', checkAuthSI, routes.getFailsignup);
+app.get('/failsignup', checkAuth, routes.getFailsignup);
 
 /* LOGIN */
 
-app.get('/login', checkAuthSI, (req, res) => {
+app.get('/login', checkAuth, (req, res) => {
   res.sendFile(path.join(__dirname, './public/login.html'));
 });
 
@@ -203,11 +159,11 @@ app.post(
   routes.getLogin
 );
 
-app.get('/faillogin', checkAuthSI, routes.getFaillogin);
+app.get('/faillogin', checkAuth, routes.getFaillogin);
 
 app.get('/', (req, res) => {});
 
-app.get('/logout', checkAuthNo, (req, res) => {
+app.get('/logout', checkAuthLogout, (req, res) => {
   let user = req.user.username;
   req.logout(function (err) {
     if (err) {

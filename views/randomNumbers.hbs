@@ -1,0 +1,25 @@
+
+  <div class="container productosContainer">
+  <h2>Numeros Random</h2>
+<table class="table tableContainer  ">
+  <thead>
+    <tr>
+      <th scope="col">Numero</th>
+      <th scope="col">Veces</th>
+
+    </tr>
+  </thead>
+{{#each renderArray}}
+<tr>
+    
+    
+      <td>{{this.Numero}}</td>
+      <td>{{this.Veces}}</td>
+      
+    
+    
+    </tr>
+    {{/each}}
+
+    </table>
+    </div>

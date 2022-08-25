@@ -1,3 +1,5 @@
+const util = require('util');
+
 /* PATH */
 const path = require('path');
 
@@ -38,6 +40,27 @@ function failRoute(req, res) {
   res.redirect('/');
 }
 
+function getRandoms(req, res) {
+  let arrayNumeros = [1];
+  let veces = 1;
+  cant = Number(req.query.cant || 100000000);
+
+  for (let ciclo = 0; ciclo < cant; ciclo++) {
+    if (ciclo < cant) {
+      const numero = Math.floor(Math.random() * (1000 - 1 + 1) + 1);
+      arrayNumeros.forEach((v) => v === numero && veces++);
+      arrayNumeros.push({ Numero: numero, Veces: veces });
+    }
+  }
+  console.log(
+    util.inspect(arrayNumeros, { showHidden: false, depth: null, colors: true })
+  );
+
+  const renderArray = arrayNumeros;
+
+  res.render('randomNumbers', { renderArray });
+}
+
 module.exports = {
   getFailsignup,
   postSignup,
@@ -45,4 +68,5 @@ module.exports = {
   getFaillogin,
   getLogout,
   failRoute,
+  getRandoms,
 };

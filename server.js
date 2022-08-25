@@ -223,6 +223,9 @@ app.get('/info', (req, res) => {
   res.render('processInfo', info);
 });
 
+/* NUMEROS RANDOMS */
+app.get('/api/randoms', routes.getRandoms);
+
 //  FAIL ROUTE
 app.get('*', routes.failRoute);
 

@@ -33,7 +33,7 @@ const { hashPassword, isValidPassword } = require('./utils/hashpassword');
 
 /* Routes */
 
-const routes = require('./routes/routes');
+const routes = require('./controllers/routes');
 
 /* Mongoose */
 
@@ -138,6 +138,8 @@ passport.deserializeUser((id, done) => {
 app.get('/register', checkAuth, (req, res) => {
   res.sendFile(path.join(__dirname, './public/signup.html'));
 });
+
+/* Error Register */
 
 app.post(
   '/register',

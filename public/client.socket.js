@@ -139,3 +139,9 @@ async function insertUser() {
   }
 }
 insertUser();
+
+/* RENDER INFOPROCESS */
+
+  async function renderInfo () {}
+
+

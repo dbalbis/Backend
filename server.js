@@ -43,10 +43,28 @@ require('dotenv').config();
 
 const PORT = require('./config');
 
+/* HANDLEBARS */
+
+const { engine } = require('express-handlebars');
+
 /* Mongoose */
 
 const mongoose = require('mongoose');
 const mongoOptions = { useNewUrlParser: true, useUnifiedTopology: true };
+
+/* CONFIG HBS */
+
+app.engine(
+  'hbs',
+  engine({
+    extname: '.hbs',
+    defaultLayout: path.join(__dirname + '/views/layouts/main.hbs'),
+    layoutsDir: path.join(__dirname, '/views/layouts'),
+    partialsDir: path.join(__dirname, '/views/partials'),
+  })
+);
+app.set('views', path.join(__dirname, '/views'));
+app.set('view engine', 'hbs');
 
 app.use(express.static(`${__dirname}/public`));
 app.use(express.json());
@@ -189,6 +207,20 @@ app.get('/api/user-info', (req, res) => {
   } else {
     res.json({});
   }
+});
+
+/* PARA OBTENER LA INFO DEL PROCESS */
+app.get('/info', (req, res) => {
+  const info = {
+    args: process.argv.slice(2),
+    platform: process.platform,
+    version: process.version,
+    rss: process.memoryUsage.rss(),
+    path: process.argv[0],
+    pid: process.pid,
+    folder: process.argv[1],
+  };
+  res.render('processInfo', info);
 });
 
 //  FAIL ROUTE

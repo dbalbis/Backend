@@ -35,6 +35,14 @@ const { hashPassword, isValidPassword } = require('./utils/hashpassword');
 
 const routes = require('./controllers/routes');
 
+/* DotENV */
+
+require('dotenv').config();
+
+/* Config */
+
+const PORT = require('./config');
+
 /* Mongoose */
 
 const mongoose = require('mongoose');
@@ -47,11 +55,10 @@ app.use(cookieParser());
 app.use(
   session({
     store: MongoStore.create({
-      mongoUrl:
-        'mongodb+srv://dbalbis:44516235@cluster0.bnrauug.mongodb.net/db?retryWrites=true&w=majority',
+      mongoUrl: process.env.MONGOURL,
       mongoOptions,
     }),
-    secret: 'coderhouse',
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
     rolling: true, // Reinicia el tiempo de expiracion con cada request
@@ -67,7 +74,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-const PORT = process.env.PORT || 8080;
 const serverExpress = app.listen(PORT, (err) =>
   err
     ? console.log(`Error en el server: ${err}`)
@@ -116,13 +122,10 @@ passport.use('register', signupStrategy);
 passport.use('login', loginStrategy);
 
 /* Conectamos MONGO */
-mongoose.connect(
-  'mongodb+srv://dbalbis:44516235@cluster0.bnrauug.mongodb.net/db?retryWrites=true&w=majority',
-  (err, res) => {
-    if (err) throw err;
-    return console.log('Base de datos MONGO conectada.');
-  }
-);
+mongoose.connect(process.env.MONGOURL, (err, res) => {
+  if (err) throw err;
+  return console.log('Base de datos MONGO conectada.');
+});
 
 passport.serializeUser((user, done) => {
   done(null, user._id);

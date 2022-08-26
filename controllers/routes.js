@@ -1,4 +1,8 @@
 const util = require('util');
+const renderArray = require('./randomGenerator');
+/* FORK */
+
+const { fork } = require('child_process');
 
 /* PATH */
 const path = require('path');
@@ -41,24 +45,19 @@ function failRoute(req, res) {
 }
 
 function getRandoms(req, res) {
-  let arrayNumeros = [1];
-  let veces = 1;
-  cant = Number(req.query.cant || 100000000);
+  const cant = Number(req.query.cant || 100000000);
+  console.log('Cantidad', cant);
+  const forked = fork(__dirname + '/randomGenerator.js');
+  forked.on('message', (msg) => {
+    if (msg == 'listo') {
+      forked.send(cant);
+    } else {
+      console.log('Random generado...');
+      const renderArray = msg;
 
-  for (let ciclo = 0; ciclo < cant; ciclo++) {
-    if (ciclo < cant) {
-      const numero = Math.floor(Math.random() * (1000 - 1 + 1) + 1);
-      arrayNumeros.forEach((v) => v === numero && veces++);
-      arrayNumeros.push({ Numero: numero, Veces: veces });
+      res.render('randomNumbers', { renderArray });
     }
-  }
-  console.log(
-    util.inspect(arrayNumeros, { showHidden: false, depth: null, colors: true })
-  );
-
-  const renderArray = arrayNumeros;
-
-  res.render('randomNumbers', { renderArray });
+  });
 }
 
 module.exports = {

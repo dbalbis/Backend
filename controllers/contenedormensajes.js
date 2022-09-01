@@ -13,7 +13,7 @@ class messagesManager {
           });
         }
       });
-      console.log('se creo la tabla mensaje');
+      
     } catch (err) {
       console.log('error constructor', err);
     }

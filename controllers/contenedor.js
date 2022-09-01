@@ -13,7 +13,6 @@ class productsManager {
           });
         }
       });
-      console.log('tabla creada', tableName);
     } catch (err) {
       console.log('error constructor', err);
     }
@@ -26,16 +25,15 @@ class productsManager {
     return rows;
   }
 
-  async newProduct(title, price, thumbnail){
+  async newProduct(title, price, thumbnail) {
     const elemento = {
-        title,
-        price,
-        thumbnail,
-
-    }
-    const product= await this.dbMariadb.from(this.tableName).insert(elemento)
-    return product
-}
+      title,
+      price,
+      thumbnail,
+    };
+    const product = await this.dbMariadb.from(this.tableName).insert(elemento);
+    return product;
+  }
 }
 
 module.exports = productsManager;

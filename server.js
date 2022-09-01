@@ -67,215 +67,218 @@ if (iscluster && cluster.isPrimary) {
     cluster.fork();
   });
   cluster.on('exit', (worker) => {
-    console.log(`Worker ${worker.process.id} died.`);
+    console.log(`Worker ${worker.process.pid} died.`);
     cluster.fork();
   });
 } else {
   /* CONFIG HBS */
 
-app.engine(
-  'hbs',
-  engine({
-    extname: '.hbs',
-    defaultLayout: path.join(__dirname + '/views/layouts/main.hbs'),
-    layoutsDir: path.join(__dirname, '/views/layouts'),
-    partialsDir: path.join(__dirname, '/views/partials'),
-  })
-);
-app.set('views', path.join(__dirname, '/views'));
-app.set('view engine', 'hbs');
+  app.engine(
+    'hbs',
+    engine({
+      extname: '.hbs',
+      defaultLayout: path.join(__dirname + '/views/layouts/main.hbs'),
+      layoutsDir: path.join(__dirname, '/views/layouts'),
+      partialsDir: path.join(__dirname, '/views/partials'),
+    })
+  );
+  app.set('views', path.join(__dirname, '/views'));
+  app.set('view engine', 'hbs');
 
-app.use(express.static(`${__dirname}/public`));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
-app.use(
-  session({
-    store: MongoStore.create({
-      mongoUrl: process.env.MONGOURL,
-      mongoOptions,
-    }),
-    secret: process.env.SECRET,
-    resave: false,
-    saveUninitialized: false,
-    rolling: true, // Reinicia el tiempo de expiracion con cada request
-    cookie: {
-      maxAge: 600000,
-      httpOnly: false,
-      secure: false,
-    },
-  })
-);
+  app.use(express.static(`${__dirname}/public`));
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
+  app.use(cookieParser());
+  app.use(
+    session({
+      store: MongoStore.create({
+        mongoUrl: process.env.MONGOURL,
+        mongoOptions,
+      }),
+      secret: process.env.SECRET,
+      resave: false,
+      saveUninitialized: false,
+      rolling: true, // Reinicia el tiempo de expiracion con cada request
+      cookie: {
+        maxAge: 600000,
+        httpOnly: false,
+        secure: false,
+      },
+    })
+  );
 
-/* Passport */
-app.use(passport.initialize());
-app.use(passport.session());
+  /* Passport */
+  app.use(passport.initialize());
+  app.use(passport.session());
 
-const serverExpress = app.listen(PORT, (err) =>
-  err
-    ? console.log(`Error en el server: ${err}`)
-    : console.log(`Server listening on PORT: ${PORT} en modo ${MODE}`)
-);
+  /* SERVER */
+  const serverExpress = app.listen(PORT, (err) =>
+    err
+      ? console.log(`Error en el server: ${err}`)
+      : console.log(
+          `Server listening on PORT: ${PORT} Mode: ${MODE} - Worker: ${process.pid}`
+        )
+  );
 
-const signupStrategy = new LocalStrategy(
-  { passReqToCallback: true },
+  /* STRATEGY */
+  const signupStrategy = new LocalStrategy(
+    { passReqToCallback: true },
 
-  async (req, username, password, done) => {
-    try {
-      console.log('Estoy aca!');
-      const existingUser = await User.findOne({ username: username });
+    async (req, username, password, done) => {
+      try {
+        console.log('Estoy aca!');
+        const existingUser = await User.findOne({ username: username });
 
-      if (existingUser) {
-        return done(`Usuario ya registrado!`, false);
+        if (existingUser) {
+          return done(`Usuario ya registrado!`, false);
+        }
+
+        const newUser = {
+          username: req.body.username,
+          email: req.body.email,
+          password: hashPassword(password),
+        };
+
+        const createdUser = await User.create(newUser);
+
+        return done(null, createdUser);
+      } catch (err) {
+        console.log(err);
+        done(err);
       }
-
-      const newUser = {
-        username: req.body.username,
-        email: req.body.email,
-        password: hashPassword(password),
-      };
-
-      const createdUser = await User.create(newUser);
-
-      return done(null, createdUser);
-    } catch (err) {
-      console.log(err);
-      done(err);
     }
-  }
-);
+  );
 
-const loginStrategy = new LocalStrategy(async (username, password, done) => {
-  const user = await User.findOne({ username: username });
+  const loginStrategy = new LocalStrategy(async (username, password, done) => {
+    const user = await User.findOne({ username: username });
 
-  if (!user || !isValidPassword(password, user.password)) {
-    return done('Invalid credentials', null);
-  }
-
-  return done(null, user);
-});
-
-passport.use('register', signupStrategy);
-passport.use('login', loginStrategy);
-
-/* Conectamos MONGO */
-mongoose.connect(process.env.MONGOURL, (err, res) => {
-  if (err) throw err;
-  return console.log('Base de datos MONGO conectada.');
-});
-
-passport.serializeUser((user, done) => {
-  done(null, user._id);
-});
-
-passport.deserializeUser((id, done) => {
-  User.findById(id, done);
-});
-
-/****  RUTAS ******/
-
-/* REGISTER */
-app.get('/register', checkAuth, (req, res) => {
-  res.sendFile(path.join(__dirname, './public/signup.html'));
-});
-
-/* Error Register */
-
-app.post(
-  '/register',
-  passport.authenticate('register', { failureRedirect: '/failsignup' }),
-  routes.postSignup
-);
-
-app.get('/failsignup', checkAuth, routes.getFailsignup);
-
-/* LOGIN */
-
-app.get('/login', checkAuth, (req, res) => {
-  res.sendFile(path.join(__dirname, './public/login.html'));
-});
-
-app.post(
-  '/login',
-  passport.authenticate('login', { failureRedirect: '/failsignup' }),
-  routes.getLogin
-);
-
-app.get('/faillogin', checkAuth, routes.getFaillogin);
-
-app.get('/', (req, res) => {});
-
-app.get('/logout', checkAuthLogout, (req, res) => {
-  let user = req.user.username;
-  req.logout(function (err) {
-    if (err) {
-      return next(err);
+    if (!user || !isValidPassword(password, user.password)) {
+      return done('Invalid credentials', null);
     }
-    res.send(`<h1>Hasta luego ${user}</h1>
+
+    return done(null, user);
+  });
+
+  passport.use('register', signupStrategy);
+  passport.use('login', loginStrategy);
+
+  /* Conectamos MONGO */
+  mongoose.connect(process.env.MONGOURL, (err, res) => {
+    if (err) throw err;
+    return console.log('Base de datos MONGO conectada.');
+  });
+
+  passport.serializeUser((user, done) => {
+    done(null, user._id);
+  });
+
+  passport.deserializeUser((id, done) => {
+    User.findById(id, done);
+  });
+
+  /****  RUTAS ******/
+
+  /* REGISTER */
+  app.get('/register', checkAuth, (req, res) => {
+    res.sendFile(path.join(__dirname, './public/signup.html'));
+  });
+
+  /* Error Register */
+
+  app.post(
+    '/register',
+    passport.authenticate('register', { failureRedirect: '/failsignup' }),
+    routes.postSignup
+  );
+
+  app.get('/failsignup', checkAuth, routes.getFailsignup);
+
+  /* LOGIN */
+
+  app.get('/login', checkAuth, (req, res) => {
+    res.sendFile(path.join(__dirname, './public/login.html'));
+  });
+
+  app.post(
+    '/login',
+    passport.authenticate('login', { failureRedirect: '/failsignup' }),
+    routes.getLogin
+  );
+
+  app.get('/faillogin', checkAuth, routes.getFaillogin);
+
+  app.get('/', (req, res) => {});
+
+  app.get('/logout', checkAuthLogout, (req, res) => {
+    let user = req.user.username;
+    req.logout(function (err) {
+      if (err) {
+        return next(err);
+      }
+      res.send(`<h1>Hasta luego ${user}</h1>
   <script type="text/javascript">
   setTimeout(function(){ location.href = '/'},2000)
   </script>`);
+    });
   });
-});
-/* PARA OBTENER EL NOMBRE DE USUARIO :( */
-app.get('/api/user-info', (req, res) => {
-  if (req.user) {
-    let user = req.user.username;
-    let email = req.user.email;
-    res.json({ username: user, email: email });
-  } else {
-    res.json({});
-  }
-});
+  /* PARA OBTENER EL NOMBRE DE USUARIO :( */
+  app.get('/api/user-info', (req, res) => {
+    if (req.user) {
+      let user = req.user.username;
+      let email = req.user.email;
+      res.json({ username: user, email: email });
+    } else {
+      res.json({});
+    }
+  });
 
-/* PARA OBTENER LA INFO DEL PROCESS */
-app.get('/info', (req, res) => {
-  const info = {
-    args: process.argv.slice(2),
-    platform: process.platform,
-    version: process.version,
-    rss: process.memoryUsage.rss(),
-    path: process.argv[0],
-    pid: process.pid,
-    folder: process.argv[1],
-  };
-  res.render('processInfo', info);
-});
+  /* PARA OBTENER LA INFO DEL PROCESS */
+  app.get('/info', (req, res) => {
+    const info = {
+      args: process.argv.slice(2),
+      platform: process.platform,
+      version: process.version,
+      rss: process.memoryUsage.rss(),
+      path: process.argv[0],
+      pid: process.pid,
+      folder: process.argv[1],
+      cpus: cpus.length,
+    };
+    res.render('processInfo', info);
+  });
 
-/* NUMEROS RANDOMS */
-app.get('/api/randoms', routes.getRandoms);
+  /* NUMEROS RANDOMS */
+  app.get('/api/randoms', routes.getRandoms);
 
-//  FAIL ROUTE
-app.get('*', routes.failRoute);
+  //  FAIL ROUTE
+  app.get('*', routes.failRoute);
 
-/* SOCKET */
+  /* SOCKET */
 
-const io = new IOServer(serverExpress);
+  const io = new IOServer(serverExpress);
 
-io.on('connection', async (socket) => {
-  console.log(`Socket ID: ${socket.id} connected`);
+  io.on('connection', async (socket) => {
+    console.log(`Socket ID: ${socket.id} connected`);
 
-  /* PRODUCTOS */
-  const data = await productsContainer.getAll();
-  socket.emit('server:envioproductos', data);
-
-  socket.on('client:envioproduct', async (productObject) => {
-    const { title, price, thumbnail } = productObject;
-    await productsContainer.newProduct(title, price, thumbnail); //recibo productos
+    /* PRODUCTOS */
     const data = await productsContainer.getAll();
-    io.emit('server:envioproductos', data); //emito productos recibidos a los usuarios
-  });
-  /* MENSAJES */
-  const messages = await messagesContainer.getAllMessages();
-  socket.emit('server:enviomessages', messages); //envio CHATS a todos los usuarios
-  socket.on('client:enviomessage', async (messageObject) => {
-    const { email, message } = messageObject;
-    date = new Date().toLocaleDateString();
-    await messagesContainer.newMessages(email, date, message); //RECIBO mensaje y lo anido
+    socket.emit('server:envioproductos', data);
+
+    socket.on('client:envioproduct', async (productObject) => {
+      const { title, price, thumbnail } = productObject;
+      await productsContainer.newProduct(title, price, thumbnail); //recibo productos
+      const data = await productsContainer.getAll();
+      io.emit('server:envioproductos', data); //emito productos recibidos a los usuarios
+    });
+    /* MENSAJES */
     const messages = await messagesContainer.getAllMessages();
-    io.emit('server:enviomessages', messages); //EMITO CHATS
+    socket.emit('server:enviomessages', messages); //envio CHATS a todos los usuarios
+    socket.on('client:enviomessage', async (messageObject) => {
+      const { email, message } = messageObject;
+      date = new Date().toLocaleDateString();
+      await messagesContainer.newMessages(email, date, message); //RECIBO mensaje y lo anido
+      const messages = await messagesContainer.getAllMessages();
+      io.emit('server:enviomessages', messages); //EMITO CHATS
+    });
   });
-});
-
 }
-

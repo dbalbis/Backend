@@ -46,17 +46,12 @@ function failRoute(req, res) {
 
 function getRandoms(req, res) {
   const cant = Number(req.query.cant || 100000000);
-  console.log('Cantidad', cant);
   const forked = fork(__dirname + '/randomGenerator.js');
-  forked.on('message', (msg) => {
-    if (msg == 'listo') {
-      forked.send(cant);
-    } else {
-      console.log('Random generado...');
-      const renderArray = msg;
+  forked.send(cant);
+  forked.on('message', (data) => {
+    const renderArray = data;
 
-      res.render('randomNumbers', { renderArray });
-    }
+    res.render('randomNumbers', { renderArray });
   });
 }
 

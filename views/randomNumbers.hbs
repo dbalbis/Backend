@@ -10,17 +10,19 @@
     </tr>
   </thead>
 {{#each renderArray}}
+
 <tr>
     
-    
-      <td>{{this.Numero}}</td>
-      <td>{{this.Veces}}</td>
+      
+      <td>{{@key}}</td>
+      <td>{{.}}</td>
+      
       
     
     
     </tr>
     {{/each}}
-
+    
     </table>
         <a href="/">
         <p class="backLink">Volver</p>

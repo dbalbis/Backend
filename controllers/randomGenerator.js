@@ -1,24 +1,21 @@
 const util = require('util');
-let arrayNumeros = [];
-let veces = 1;
-const random = (cant, res) => {
-  for (let ciclo = 0; ciclo < cant; ciclo++) {
-    if (ciclo < cant) {
-      const numero = Math.floor(Math.random() * (1000 - 1 + 1) + 1);
-      arrayNumeros.forEach(
-        (numero) => numero === arrayNumeros[numero] && veces++
-      );
-      arrayNumeros.push({ Numero: numero, Veces: veces });
+
+const generarAleatorios = (cant) => {
+  const numeros = {};
+  for (let i = 1; i <= cant; i++) {
+    const number = Math.floor(Math.random() * (1000 - 1 + 1) + 1);
+    if (!numeros[number]) {
+      numeros[number] = 1;
+    } else {
+      numeros[number]++;
     }
   }
   console.log(
-    util.inspect(arrayNumeros, { showHidden: false, depth: null, colors: true })
+    util.inspect(numeros, { showHidden: false, depth: null, colors: true })
   );
-  return arrayNumeros;
+  return numeros;
 };
 
 process.on('message', (msg) => {
-  process.send(random(msg));
+  process.send(generarAleatorios(msg));
 });
-
-process.send('listo');

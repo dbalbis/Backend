@@ -1,11 +1,12 @@
 const yargs = require('yargs/yargs');
 
 const args = yargs(process.argv.slice(2))
-  .alias({ p: 'PORT' })
-  .default({ p: 8080 }).argv;
+  .alias({ p: 'PORT', m: 'MODE' })
+  .default({ p: 8080, m: 'FORK' }).argv;
 
-const PORT = {
+const CONFIG = {
   PORT: args.PORT,
+  MODE: args.MODE,
 };
 
-module.exports = PORT.PORT;
+module.exports = { CONFIG };

@@ -5,7 +5,9 @@ const random = (cant, res) => {
   for (let ciclo = 0; ciclo < cant; ciclo++) {
     if (ciclo < cant) {
       const numero = Math.floor(Math.random() * (1000 - 1 + 1) + 1);
-      arrayNumeros.forEach((v) => v === numero && veces++);
+      arrayNumeros.forEach(
+        (numero) => numero === arrayNumeros[numero] && veces++
+      );
       arrayNumeros.push({ Numero: numero, Veces: veces });
     }
   }

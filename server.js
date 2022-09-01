@@ -41,7 +41,11 @@ require('dotenv').config();
 
 /* Config */
 
-const PORT = require('./config');
+const { CONFIG } = require('./config');
+const PORT = CONFIG.PORT;
+const MODE = CONFIG.MODE;
+
+const iscluster = MODE == 'CLUSTER';
 
 /* HANDLEBARS */
 
@@ -52,7 +56,22 @@ const { engine } = require('express-handlebars');
 const mongoose = require('mongoose');
 const mongoOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 
-/* CONFIG HBS */
+/* MODO FORK Y CLUSTER */
+
+const os = require('os');
+const cluster = require('cluster');
+const cpus = os.cpus();
+
+if (iscluster && cluster.isPrimary) {
+  cpus.map(() => {
+    cluster.fork();
+  });
+  cluster.on('exit', (worker) => {
+    console.log(`Worker ${worker.process.id} died.`);
+    cluster.fork();
+  });
+} else {
+  /* CONFIG HBS */
 
 app.engine(
   'hbs',
@@ -95,7 +114,7 @@ app.use(passport.session());
 const serverExpress = app.listen(PORT, (err) =>
   err
     ? console.log(`Error en el server: ${err}`)
-    : console.log(`Server listening on PORT: ${PORT}`)
+    : console.log(`Server listening on PORT: ${PORT} en modo ${MODE}`)
 );
 
 const signupStrategy = new LocalStrategy(
@@ -257,3 +276,6 @@ io.on('connection', async (socket) => {
     io.emit('server:enviomessages', messages); //EMITO CHATS
   });
 });
+
+}
+

@@ -1,0 +1,42 @@
+MODOS
+
+npm start -p 3000 -m CLUSTER => MODO CLUSTER
+
+npm start -p 3000 -m FORK => MODO FORK
+
+npm start -p 3000 => MODO FORK
+
+VERIFICAR CANTIDAD DE PROCESOS TOMADOS POR NODE
+
+Ejecuto un console.log de Worker: ${process.pid} 
+
+Confirmo 1 proceso en modo FORK y 4 procesos en modo Cluster
+
+- EJECUTO EL SERVIDOR CON FOREVER CON SUS PARAMETROS Y MODO ESCUCHA
+
+forever --watch start server.js -p 3000 -m CLUSTER => CLUSTER
+forever --watch start server.js -p 3000 -m FORK => FORK
+
+Listo los procesos con forever
+
+tasklist /fi "imagename eq node.exe" => LISTAR PROCESOS POR SISTEMA OPERATIVO
+
+forever list => LISTAR LOS PROCEOS CON FOREVER
+
+LEVANTAR EL SERVIDOR CON PM2 EN MODO FORK Y CLUSTER
+
+EN MODO FORK Y PONER MODO ESCUCHA PARA CAMBIOS
+
+pm2 start server.js --watch --name="Server-1"
+
+EN MODO CLUSTER Y PONER EN MODO ESCUCHA PARA CAMBIOS
+
+pm2 start server.js --watch --name="Server-2" -i max
+
+FINALIZAR PROCESOS FORK Y CLUSTER
+
+ tasklist /fi "imagename eq node.exe => LISTAR PROCESOS POR SISTEMA OPERATIVO
+
+ taskkill /pid IDPROCESO /F => PARA MATAR UN PROCESO DEL SERVIDOR
+
+Si ejecutamos pm2 status o tasklist /fi "imagename eq node.exe podemos comprobar que el proceso se levanto de vuelta

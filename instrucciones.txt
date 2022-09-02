@@ -40,3 +40,28 @@ FINALIZAR PROCESOS FORK Y CLUSTER
  taskkill /pid IDPROCESO /F => PARA MATAR UN PROCESO DEL SERVIDOR
 
 Si ejecutamos pm2 status o tasklist /fi "imagename eq node.exe podemos comprobar que el proceso se levanto de vuelta
+
+REDIRIGIR TODAS LAS CONSULTAS A /API/RAMDOMS A UN CLUSTER EN EL PUERTO 8081
+
+**En archivo nginx.conf descomentar lo de la primera parte y comentar lo de la segunda**
+
+node server.js => LEVANTAMOS EL SERVER EN MODO FORK DEFAULT Y PORT 8080 DEFAULT
+
+node server.js -p 8081 -m CLUSTER => LEVANTAMOS EL SERVER EN MODO CLUSTER Y EL PORT EN 8081
+
+nginx.exe levantamos nginx
+
+Visualizamos que todo esta correcto
+
+Si finalizamos el proceso del servidor en el puerto 8081 y en modo CLUSTER, recibimos un error pero si podemos acceder al resto de las rutas, comprobamos que esta funcionando correctamente.
+
+Ejecuta en modo cluster 4 instancias escuchando en los puertos 8082, 8083, 8084 y 8085
+
+pm2 start server.js --name="Server-1" --node-args=" server.js -p 8082
+pm2 start server.js --name="Server-2" --node-args=" server.js -p 8083
+pm2 start server.js --name="Server-3" --node-args=" server.js -p 8084
+pm2 start server.js --name="Server-5" --node-args=" server.js -p 8085
+
+nginx.exe - levantamos nginx
+
+**En archivo nginx.conf comentar lo de la primera parte y des-comentar lo de la segunda**

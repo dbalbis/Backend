@@ -57,6 +57,8 @@ Si finalizamos el proceso del servidor en el puerto 8081 y en modo CLUSTER, reci
 
 Ejecuta en modo cluster 4 instancias escuchando en los puertos 8082, 8083, 8084 y 8085
 
+node server.js => LEVANTAMOS EL SERVER EN MODO FORK DEFAULT Y PORT 8080 DEFAULT
+
 pm2 start server.js --name="Server-1" --node-args=" server.js -p 8082
 pm2 start server.js --name="Server-2" --node-args=" server.js -p 8083
 pm2 start server.js --name="Server-3" --node-args=" server.js -p 8084
@@ -65,3 +67,9 @@ pm2 start server.js --name="Server-5" --node-args=" server.js -p 8085
 nginx.exe - levantamos nginx
 
 **En archivo nginx.conf comentar lo de la primera parte y des-comentar lo de la segunda**
+
+Nos dirgimos a /api/randoms y vemos que todo funciona perfectamente.
+
+Pausamos cada uno de los servidores en PM2 y recibimos un error pero el resto de las rutas son accesibles. Comprobamos que el CLUSTER funciona correctamente.
+
+Los reanudamos y comprobamos que vuelven al funcionamiento

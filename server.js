@@ -62,6 +62,9 @@ const os = require('os');
 const cluster = require('cluster');
 const cpus = os.cpus();
 
+/* Compression */
+const compression = require('compression');
+
 if (iscluster && cluster.isPrimary) {
   cpus.map(() => {
     cluster.fork();
@@ -233,7 +236,22 @@ if (iscluster && cluster.isPrimary) {
   });
 
   /* PARA OBTENER LA INFO DEL PROCESS */
-  app.get('/info', (req, res) => {
+  app.get('/info', compression(), (req, res) => {
+    const info = {
+      args: process.argv.slice(2),
+      platform: process.platform,
+      version: process.version,
+      rss: process.memoryUsage.rss(),
+      path: process.argv[0],
+      pid: process.pid,
+      folder: process.argv[1],
+      cpus: cpus.length,
+    };
+    res.render('processInfo', info);
+  });
+
+  /* PARA OBTENER LA INFO DEL PROCESS */
+  app.get('/info-nogzip', (req, res) => {
     const info = {
       args: process.argv.slice(2),
       platform: process.platform,

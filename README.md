@@ -169,13 +169,14 @@ En una nueva consola en la carpeta del proyecto ponemos:
     node profiling/benchmark.js
 Finalizado el test de autocannon, presionamos CTRL + C para cerrar el proceso y vemos que se genera una carpeta y allí dentro encontramos el archivo flamegraph.html" que contiene las graficas.
 
-CON CONSOLE.LOG
+***SIN CONSOLE.LOG***
+
+![Screenshot](https://buentrack.com/wp-content/uploads/2022/09/GRAFICASIN1.png)
+
+***CON CONSOLE.LOG***
 
 ![Screenshot](https://buentrack.com/wp-content/uploads/2022/09/GRAFICACON1.png)
 
-SIN CONSOLE.LOG
-
-![Screenshot](https://buentrack.com/wp-content/uploads/2022/09/GRAFICASIN1.png)
 
 
 

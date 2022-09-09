@@ -14,14 +14,12 @@ class productsManager {
         }
       });
     } catch (err) {
-      console.log('error constructor', err);
+      logger.error('error constructor', err);
     }
   }
   async getAll() {
     let rows = await this.dbMariadb.from(this.tableName).select('*');
-    rows.forEach((article) => {
-      console.log(`Id de los articulos en la DB: ${article['id']}`);
-    });
+
     return rows;
   }
 

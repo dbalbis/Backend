@@ -65,12 +65,16 @@ const cpus = os.cpus();
 /* Compression */
 const compression = require('compression');
 
+/* Logger WINSTON */
+
+const logger = require('./logs/logger');
+
 if (iscluster && cluster.isPrimary) {
   cpus.map(() => {
     cluster.fork();
   });
   cluster.on('exit', (worker) => {
-    console.log(`Worker ${worker.process.pid} died.`);
+    logger.info(`Worker ${worker.process.pid} died.`);
     cluster.fork();
   });
 } else {
@@ -117,8 +121,8 @@ if (iscluster && cluster.isPrimary) {
   /* SERVER */
   const serverExpress = app.listen(PORT, (err) =>
     err
-      ? console.log(`Error en el server: ${err}`)
-      : console.log(
+      ? logger.error(`Error en el server: ${err}`)
+      : logger.info(
           `Server listening on PORT: ${PORT} Mode: ${MODE} - Worker: ${process.pid}`
         )
   );
@@ -129,7 +133,6 @@ if (iscluster && cluster.isPrimary) {
 
     async (req, username, password, done) => {
       try {
-        console.log('Estoy aca!');
         const existingUser = await User.findOne({ username: username });
 
         if (existingUser) {
@@ -146,7 +149,7 @@ if (iscluster && cluster.isPrimary) {
 
         return done(null, createdUser);
       } catch (err) {
-        console.log(err);
+        logger.error(err);
         done(err);
       }
     }
@@ -168,7 +171,7 @@ if (iscluster && cluster.isPrimary) {
   /* Conectamos MONGO */
   mongoose.connect(process.env.MONGOURL, (err, res) => {
     if (err) throw err;
-    return console.log('Base de datos MONGO conectada.');
+    return logger.info('Base de datos MONGO conectada.');
   });
 
   passport.serializeUser((user, done) => {
@@ -180,6 +183,12 @@ if (iscluster && cluster.isPrimary) {
   });
 
   /****  RUTAS ******/
+
+  //Registrar todas las peticiones en el logger.
+  app.use((req, res, next) => {
+    logger.info(`Petición recibida | Ruta: ${req.url} - Método: ${req.method}`);
+    next();
+  });
 
   /* REGISTER */
   app.get('/register', checkAuth, (req, res) => {
@@ -276,7 +285,7 @@ if (iscluster && cluster.isPrimary) {
   const io = new IOServer(serverExpress);
 
   io.on('connection', async (socket) => {
-    console.log(`Socket ID: ${socket.id} connected`);
+    logger.info(`Socket ID: ${socket.id} connected`);
 
     /* PRODUCTOS */
     const data = await productsContainer.getAll();

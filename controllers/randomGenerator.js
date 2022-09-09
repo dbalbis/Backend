@@ -1,4 +1,5 @@
 const util = require('util');
+const logger = require('../logs/logger');
 
 const generarAleatorios = (cant) => {
   const numeros = {};
@@ -10,7 +11,7 @@ const generarAleatorios = (cant) => {
       numeros[number]++;
     }
   }
-  console.log(
+  logger.info(
     util.inspect(numeros, { showHidden: false, depth: null, colors: true })
   );
   return numeros;

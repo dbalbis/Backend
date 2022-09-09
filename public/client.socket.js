@@ -19,7 +19,7 @@ function postProduct() {
 
     socket.emit('client:envioproduct', productObject);
   } catch (error) {
-    console.log('Hubo un error', error);
+    logger.error('Hubo un error', error);
   }
 }
 /* Funcion Render Products */

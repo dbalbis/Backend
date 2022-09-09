@@ -1,3 +1,5 @@
+const logger = require('../logs/logger');
+
 class messagesManager {
   constructor(configSqlDB, tableName) {
     try {
@@ -13,19 +15,14 @@ class messagesManager {
           });
         }
       });
-      
     } catch (err) {
-      console.log('error constructor', err);
+      logger.error('error constructor', err);
     }
   }
 
   async getAllMessages() {
     let rows = await this.dbSqldb.from(this.tableName).select('*');
-    rows.forEach((article) => {
-      console.log(
-        `${article['id']} ${article['email']} ${article['date']}: ${article['message']}`
-      );
-    });
+    rows.forEach((article) => {});
     return rows;
   }
 

@@ -1,5 +1,4 @@
 const util = require('util');
-const renderArray = require('./randomGenerator');
 
 const logger = require('../logs/logger');
 
@@ -51,13 +50,21 @@ function failRoute(req, res) {
 
 function getRandoms(req, res) {
   const cant = Number(req.query.cant || 100000000);
-  const forked = fork(__dirname + '/randomGenerator.js');
-  forked.send(cant);
-  forked.on('message', (data) => {
-    const renderArray = data;
 
-    res.render('randomNumbers', { renderArray });
-  });
+  const numeros = {};
+  for (let i = 1; i <= cant; i++) {
+    const number = Math.floor(Math.random() * (1000 - 1 + 1) + 1);
+    if (!numeros[number]) {
+      numeros[number] = 1;
+    } else {
+      numeros[number]++;
+    }
+  }
+  logger.info(
+    util.inspect(numeros, { showHidden: false, depth: null, colors: true })
+  );
+
+  res.render('randomNumbers', { numeros });
 }
 
 module.exports = {

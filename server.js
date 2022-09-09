@@ -256,6 +256,7 @@ if (iscluster && cluster.isPrimary) {
       folder: process.argv[1],
       cpus: cpus.length,
     };
+    //console.log(info);
     res.render('processInfo', info);
   });
 

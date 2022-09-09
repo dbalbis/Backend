@@ -1,0 +1,198 @@
+Statistical profiling result from profiling/NO-consoleLog-v8.log, (4734 ticks, 1 unaccounted, 0 excluded).
+
+ [Shared libraries]:
+   ticks  total  nonlib   name
+   4070   86.0%          C:\WINDOWS\SYSTEM32\ntdll.dll
+    614   13.0%          C:\Program Files\nodejs\node.exe
+      2    0.0%          C:\WINDOWS\System32\KERNELBASE.dll
+      2    0.0%          C:\WINDOWS\System32\KERNEL32.DLL
+
+ [JavaScript]:
+   ticks  total  nonlib   name
+      7    0.1%   15.2%  LazyCompile: *resolve node:path:158:10
+      3    0.1%    6.5%  LazyCompile: *next C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\handlebars\dist\cjs\handlebars\compiler\parser.js:478:32
+      3    0.1%    6.5%  Function: ^processTimers node:internal/timers:485:25
+      2    0.0%    4.3%  RegExp: ^(?:[^\x00]*?(?=(\{\{)))
+      2    0.0%    4.3%  RegExp: (?:\r\n?|\n).*
+      2    0.0%    4.3%  LazyCompile: *template C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\handlebars\dist\cjs\handlebars\runtime.js:52:18
+      1    0.0%    2.2%  RegExp: ^(?:\{\{(~)?\^\s*(~)?\}\})
+      1    0.0%    2.2%  RegExp: ^(?:\s+)
+      1    0.0%    2.2%  RegExp: ^(?:\()
+      1    0.0%    2.2%  RegExp: ;\s*charset\s*=
+      1    0.0%    2.2%  LazyCompile: *wrap C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\handlebars\dist\cjs\handlebars\compiler\code-gen.js:101:22
+      1    0.0%    2.2%  LazyCompile: *step C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\express-handlebars\dist\express-handlebars.js:31:18
+      1    0.0%    2.2%  LazyCompile: *push C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\handlebars\dist\cjs\handlebars\compiler\javascript-compiler.js:868:22
+      1    0.0%    2.2%  LazyCompile: *push C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\handlebars\dist\cjs\handlebars\compiler\code-gen.js:79:22
+      1    0.0%    2.2%  LazyCompile: *preparePath C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\handlebars\dist\cjs\handlebars\compiler\helpers.js:63:21
+      1    0.0%    2.2%  LazyCompile: *normalizeString node:path:66:25
+      1    0.0%    2.2%  LazyCompile: *next C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\express\lib\router\index.js:177:16
+      1    0.0%    2.2%  LazyCompile: *lookupOnContext C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\handlebars\dist\cjs\handlebars\compiler\javascript-compiler.js:448:44
+      1    0.0%    2.2%  LazyCompile: *SourceNode_walk C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\source-map\lib\source-node.js:221:53
+      1    0.0%    2.2%  LazyCompile: *<anonymous> C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\express-handlebars\dist\express-handlebars.js:30:40
+      1    0.0%    2.2%  Function: ^realpathSync node:fs:2408:22
+      1    0.0%    2.2%  Function: ^readFileAfterClose node:internal/fs/read_file_context:46:28
+      1    0.0%    2.2%  Function: ^popAsyncContext node:internal/async_hooks:543:25
+      1    0.0%    2.2%  Function: ^normalize node:path:304:12
+      1    0.0%    2.2%  Function: ^lookupProperty C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\handlebars\dist\cjs\handlebars\runtime.js:118:44
+      1    0.0%    2.2%  Function: ^insert node:internal/timers:350:16
+      1    0.0%    2.2%  Function: ^fresh C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\parseurl\index.js:153:16
+      1    0.0%    2.2%  Function: ^arrayStrictEqual C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\mongodb\lib\utils.js:546:26
+      1    0.0%    2.2%  Function: ^_addListener node:events:418:22
+      1    0.0%    2.2%  Function: ^__awaiter C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\express-handlebars\dist\express-handlebars.js:18:54
+      1    0.0%    2.2%  Function: ^DerivedLogger.<computed> C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\winston\lib\winston\create-logger.js:71:47
+      1    0.0%    2.2%  Function: ^<anonymous> C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\express-handlebars\dist\express-handlebars.js:251:47
+
+ [C++]:
+   ticks  total  nonlib   name
+
+ [Summary]:
+   ticks  total  nonlib   name
+     45    1.0%   97.8%  JavaScript
+      0    0.0%    0.0%  C++
+     44    0.9%   95.7%  GC
+   4688   99.0%          Shared libraries
+      1    0.0%          Unaccounted
+
+ [C++ entry points]:
+   ticks    cpp   total   name
+
+ [Bottom up (heavy) profile]:
+  Note: percentage shows a share of a particular caller in the total
+  amount of its parent calls.
+  Callers occupying less than 1.0% are not shown.
+
+   ticks parent  name
+   4070   86.0%  C:\WINDOWS\SYSTEM32\ntdll.dll
+
+    614   13.0%  C:\Program Files\nodejs\node.exe
+    377   61.4%    C:\Program Files\nodejs\node.exe
+     77   20.4%      Function: ^compileFunction node:vm:308:25
+     77  100.0%        Function: ^wrapSafe node:internal/modules/cjs/loader:1017:18
+     77  100.0%          Function: ^Module._compile node:internal/modules/cjs/loader:1055:37
+     73   94.8%            Function: ^Module._extensions..js node:internal/modules/cjs/loader:1110:37
+      4    5.2%            LazyCompile: ~Module._extensions..js node:internal/modules/cjs/loader:1110:37
+     32    8.5%      Function: ^handleWriteReq node:internal/stream_base_commons:45:24
+     32  100.0%        Function: ^writeGeneric node:internal/stream_base_commons:151:22
+     21   65.6%          Function: ^Socket._writeGeneric node:net:769:42
+     21  100.0%            Function: ^Socket._write node:net:806:35
+      6   18.8%          LazyCompile: *_write node:internal/streams/writable:283:16
+      6  100.0%            Function: ^Writable.write node:internal/streams/writable:333:36
+      5   15.6%          LazyCompile: *writeOrBuffer node:internal/streams/writable:365:23
+      5  100.0%            Function: ^_write node:internal/streams/writable:283:16
+     23    6.1%      Function: ^stat node:internal/modules/cjs/loader:151:14
+     12   52.2%        Function: ^Module._findPath node:internal/modules/cjs/loader:494:28
+     10   83.3%          Function: ^Module._resolveFilename node:internal/modules/cjs/loader:848:35
+     10  100.0%            Function: ^Module._load node:internal/modules/cjs/loader:757:24
+      2   16.7%          LazyCompile: ~Module._resolveFilename node:internal/modules/cjs/loader:848:35
+      1   50.0%            LazyCompile: ~Module._load node:internal/modules/cjs/loader:757:24
+      1   50.0%            Function: ^Module._load node:internal/modules/cjs/loader:757:24
+     11   47.8%        Function: ^tryFile node:internal/modules/cjs/loader:384:17
+     11  100.0%          Function: ^tryExtensions node:internal/modules/cjs/loader:400:23
+     11  100.0%            Function: ^Module._findPath node:internal/modules/cjs/loader:494:28
+     13    3.4%      Function: ^openSync node:fs:576:18
+     13  100.0%        Function: ^readFileSync node:fs:450:22
+     13  100.0%          Function: ^Module._extensions..js node:internal/modules/cjs/loader:1110:37
+     13  100.0%            Function: ^Module.load node:internal/modules/cjs/loader:969:33
+     12    3.2%      Function: ^statSync node:fs:1528:18
+     12  100.0%        Function: ^tryStat C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\express\lib\view.js:174:17
+     12  100.0%          Function: ^resolve C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\express\lib\view.js:146:42
+     12  100.0%            Function: ^lookup C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\express\lib\view.js:104:40
+     11    2.9%      Function: ^realpathSync node:fs:2408:22
+     11  100.0%        Function: ^toRealPath node:internal/modules/cjs/loader:393:20
+      8   72.7%          Function: ^tryFile node:internal/modules/cjs/loader:384:17
+      8  100.0%            Function: ^tryExtensions node:internal/modules/cjs/loader:400:23
+      3   27.3%          Function: ^Module._findPath node:internal/modules/cjs/loader:494:28
+      3  100.0%            Function: ^Module._resolveFilename node:internal/modules/cjs/loader:848:35
+      8    2.1%      Function: ^writevGeneric node:internal/stream_base_commons:126:23
+      8  100.0%        Function: ^Socket._writeGeneric node:net:769:42
+      8  100.0%          Function: ^Socket._writev node:net:801:36
+      8  100.0%            Function: ^doWrite node:internal/streams/writable:398:17
+      8    2.1%      Function: ^compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      7   87.5%        Function: ^nativeModuleRequire node:internal/bootstrap/loaders:332:29
+      1   14.3%          LazyCompile: ~lazyLoadStreams node:fs:2841:25
+      1  100.0%            LazyCompile: ~get ReadStream node:fs:2984:17
+      1   14.3%          Function: ~<anonymous> node:tls:1:1
+      1  100.0%            Function: ^compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1   14.3%          Function: ~<anonymous> node:internal/crypto/pbkdf2:1:1
+      1  100.0%            Function: ^compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1   14.3%          Function: ~<anonymous> node:internal/crypto/cipher:1:1
+      1  100.0%            Function: ^compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1   14.3%          Function: ~<anonymous> node:internal/cluster/primary:1:1
+      1  100.0%            Function: ^compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1   14.3%          Function: ~<anonymous> node:internal/child_process:1:1
+      1  100.0%            Function: ^compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1   14.3%          Function: ~<anonymous> node:http:1:1
+      1  100.0%            Function: ^compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1   12.5%        LazyCompile: ~compileForPublicLoader node:internal/bootstrap/loaders:246:25
+      1  100.0%          LazyCompile: ~loadNativeModule node:internal/modules/cjs/helpers:44:26
+      1  100.0%            LazyCompile: ~Module._load node:internal/modules/cjs/loader:757:24
+      8    2.1%      C:\Program Files\nodejs\node.exe
+      1   12.5%        LazyCompile: ~r.conflicting C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\yargs\build\index.cjs:1:55405
+      1  100.0%          LazyCompile: ~<anonymous> C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\yargs\build\index.cjs:1:59154
+      1  100.0%            LazyCompile: ~<anonymous> C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\yargs\build\index.cjs:1:49020
+      1   12.5%        LazyCompile: ~<anonymous> C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\minimatch\minimatch.js:217:36
+      1  100.0%          C:\Program Files\nodejs\node.exe
+      1  100.0%            LazyCompile: ~make C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\minimatch\minimatch.js:188:8
+      1   12.5%        LazyCompile: *quotedString C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\handlebars\dist\cjs\handlebars\compiler\code-gen.js:118:38
+      1  100.0%          Function: ^pushSource C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\handlebars\dist\cjs\handlebars\compiler\javascript-compiler.js:881:34
+      1  100.0%            Function: ^append C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\handlebars\dist\cjs\handlebars\compiler\javascript-compiler.js:394:26
+      1   12.5%        LazyCompile: *pushSource C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\handlebars\dist\cjs\handlebars\compiler\javascript-compiler.js:881:34
+      1  100.0%          Function: ^appendEscaped C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\handlebars\dist\cjs\handlebars\compiler\javascript-compiler.js:416:40
+      1  100.0%            LazyCompile: *compile C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\handlebars\dist\cjs\handlebars\compiler\javascript-compiler.js:73:28
+      1   12.5%        Function: ^splitRoot node:fs:2358:33
+      1  100.0%          Function: ^realpathSync node:fs:2408:22
+      1  100.0%            Function: ^toRealPath node:internal/modules/cjs/loader:393:20
+      1   12.5%        Function: ^pipe C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\send\index.js:506:43
+      1  100.0%          Function: ^serveStatic C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\serve-static\index.js:72:31
+      1  100.0%            LazyCompile: *trim_prefix C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\express\lib\router\index.js:293:23
+      1   12.5%        Function: ^match C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\express\lib\router\layer.js:110:39
+      1  100.0%          Function: ^matchLayer C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\express\lib\router\index.js:583:20
+      1  100.0%            Function: ^next C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\express\lib\router\index.js:177:16
+      1   12.5%        Function: ^format C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\fecha\lib\fecha.umd.js:246:25
+      1  100.0%          Function: ^<anonymous> C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\logform\timestamp.js:14:25
+      1  100.0%            Function: ^<anonymous> C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\logform\combine.js:17:10
+      5    1.3%      LazyCompile: *resolve node:path:158:10
+      2   40.0%        LazyCompile: *Module._nodeModulePaths node:internal/modules/cjs/loader:583:37
+      2  100.0%          Function: ^Module.load node:internal/modules/cjs/loader:969:33
+      2  100.0%            Function: ^Module._load node:internal/modules/cjs/loader:757:24
+      1   20.0%        LazyCompile: *toNamespacedPath node:path:618:19
+      1  100.0%          Function: ^stat node:fs:1452:14
+      1  100.0%            Function: ^sendFile C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\send\index.js:712:51
+      1   20.0%        LazyCompile: *readPackageScope node:internal/modules/cjs/loader:321:26
+      1  100.0%          Function: ^Module._extensions..js node:internal/modules/cjs/loader:1110:37
+      1  100.0%            LazyCompile: *Module._load node:internal/modules/cjs/loader:757:24
+      1   20.0%        Function: ^readPackage node:internal/modules/cjs/loader:290:21
+      1  100.0%          Function: ^readPackageScope node:internal/modules/cjs/loader:321:26
+      1  100.0%            Function: ^trySelf node:internal/modules/cjs/loader:441:17
+      5    1.3%      Function: ^read node:internal/modules/package_json_reader:16:14
+      5  100.0%        Function: ^readPackage node:internal/modules/cjs/loader:290:21
+      5  100.0%          Function: ^resolveExports node:internal/modules/cjs/loader:472:24
+      5  100.0%            Function: ^Module._findPath node:internal/modules/cjs/loader:494:28
+      4    1.1%      Function: ^readSync node:fs:684:18
+      4  100.0%        Function: ^tryReadSync node:fs:429:21
+      4  100.0%          Function: ^readFileSync node:fs:450:22
+      4  100.0%            Function: ^Module._extensions..js node:internal/modules/cjs/loader:1110:37
+      4    1.1%      Function: ^initialize C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\passport\lib\middleware\initialize.js:51:29
+      2   50.0%        LazyCompile: *handle C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\express\lib\router\layer.js:86:49
+      2  100.0%          Function: ^trim_prefix C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\express\lib\router\index.js:293:23
+      2  100.0%            LazyCompile: *next C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\express\lib\router\index.js:177:16
+      1   25.0%        LazyCompile: *trim_prefix C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\express\lib\router\index.js:293:23
+      1  100.0%          LazyCompile: *next C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\express\lib\router\index.js:177:16
+      1  100.0%            Function: ^session C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\express-session\index.js:179:26
+      1   25.0%        Function: ^handle C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\express\lib\router\layer.js:86:49
+      1  100.0%          Function: ^trim_prefix C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\express\lib\router\index.js:293:23
+      1  100.0%            LazyCompile: *next C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\express\lib\router\index.js:177:16
+      4    1.1%      Function: ^hash C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\express-session\index.js:596:14
+      4  100.0%        Function: ^isModified C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\express-session\index.js:425:24
+      3   75.0%          Function: ^shouldSave C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\express-session\index.js:440:24
+      3  100.0%            Function: ^end C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\express-session\index.js:250:27
+      1   25.0%          Function: ^shouldSetCookie C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\express-session\index.js:464:29
+      1  100.0%            Function: ^<anonymous> C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\express-session\index.js:220:28
+      4    1.1%      Function: ^Hash node:internal/crypto/hash:58:14
+      4  100.0%        Function: ^createHash node:crypto:129:20
+      3   75.0%          Function: ^hash C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\express-session\index.js:596:14
+      2   66.7%            Function: ^generate C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\express-session\index.js:363:22
+      1   33.3%            Function: ^isModified C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\express-session\index.js:425:24
+      1   25.0%          Function: ^entitytag C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\etag\index.js:39:20
+      1  100.0%            Function: ^etag C:\Users\MARVEL\Desktop\WEB\Backend\loogersGzipPerformance\node_modules\etag\index.js:70:15
+

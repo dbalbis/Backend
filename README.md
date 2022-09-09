@@ -1,77 +1,186 @@
-﻿## **MODOS**
+﻿**
 
- - npm start -p 3000 -m CLUSTER **=> MODO CLUSTER**
- - npm start -p 3000 -m FORK => **MODO FORK**
+## DESAFIO LOGGERS Y GZIP
+*Verificar sobre la ruta /info con y sin compresión, la diferencia de cantidad de bytes devueltos en un caso y otro.*
+**En esta imagen podemos observar la ruta /info (con Gzip) como muestra  1.2kb en su tamaño y su tiempo de carga fue de 1.25ms**
 
-## VERIFICAR CANTIDAD DE PROCESOS TOMADOS POR NODE.
+![Screenshot](https://buentrack.com/wp-content/uploads/2022/09/1gzip.png)
 
- - Ejecuto un console.log de Worker: ${process.pid}
+**En la siguiente imagen vemos el encabezado donde afirmativamente nos dice que esta comprimido con Gzip**
 
-*Confirmo 1 proceso en modo FORK y 4 procesos en modo Cluster*
+![Screenshot](https://buentrack.com/wp-content/uploads/2022/09/2gzip.png)
 
-## EJECUTO EL SERVIDOR CON FOREVER CON SUS PARAMETROS Y MODO ESCUCHA
+***Cree la ruta /info-nogzip para comparar los resultados***
 
- - forever --watch start server.js -p 3000 -m CLUSTER => CLUSTER
- - forever --watch start server.js -p 3000 -m FORK => FORK
+**En la siguiente imagen podemos observar que en la ruta sin compresion el peso es de 2.2kb y su tiempo de carga fue de 2.2ms**
 
-## Listo los procesos con forever
+![Screenshot](https://buentrack.com/wp-content/uploads/2022/09/1nogzip.png)
 
- - tasklist /fi "imagename eq node.exe" => LISTAR PROCESOS POR SISTEMA
-   OPERATIVO
- - forever list => LISTAR LOS PROCEOS CON FOREVER
+**En la siguiente imagen vemos el encabezado donde nos dice que esta NO tiene ninguna compresión**
 
-## LEVANTAR EL SERVIDOR CON PM2 EN MODO FORK Y CLUSTER
+![Screenshot](https://buentrack.com/wp-content/uploads/2022/09/2nogzip.png)
 
-EN MODO FORK Y PONER MODO ESCUCHA PARA CAMBIOS
+**Implementado Winston**
 
- - pm2 start server.js --watch --name="Server-1"
+ - Ruta y método de todas las peticiones recibidas por el servidor
+   (info)
+ - Ruta y método de las peticiones a rutas inexistentes en el servidor
+   (warning)
+ - Errores lanzados por las apis de mensajes y productos, únicamente.
+ Menos los errores de los archivos JS que están dentro de la carpeta /public
+   (error)
 
-EN MODO CLUSTER Y PONER EN MODO ESCUCHA PARA CAMBIOS
+*Se sustituyeron los console.log por logger warn, info y error*
 
- - pm2 start server.js --watch --name="Server-2" -i max
+***Perfilamiento del servidor, realizando el test con --prof de node.js. Analizar los resultados obtenidos luego de procesarlos con --prof-process.***
 
-## FINALIZAR PROCESOS FORK Y CLUSTER
+ - **Prueba con console.log**
 
- - tasklist /fi "imagename eq node.exe => LISTAR PROCESOS POR SISTEMA
-   OPERATIVO
+En la carpeta del proyecto ejecuto en consola el siguiente comando:
+
+    node --prof server.js
+
+En una nueva consola en la carpeta del proyecto ejecuto el comando: 
+
+    artillery quick --count 20 -n 50 http://localhost:8080/info > profiling/result_consoleLog.txt
+
+*Una vez finalizado el test, renombro el archivo que se creo cuyo nombre finaliza en "v8.log" y lo muevo dentro de la carpeta "profiling".*
+
+Vuelvo a la consola y para procesar los datos de profiling de node ejecuto: 
+
+    node.exe --prof-process profiling/ConsoleLog-v8.log > profiling/ConsoleLog-v8_prof_process.txt
+
+ - ***Prueba sin console.log***
+ 
+En la carpeta del proyecto ejecuto en consola el siguiente comando:
+
+    node --prof server.js
+
+En una nueva consola en la carpeta del proyecto ejecuto el comando: 
+
+    artillery quick --count 20 -n 50 http://localhost:8080/info > profiling/result_NO-consoleLog.txt
+
+*Una vez finalizado el test, renombro el archivo que se creo cuyo nombre finaliza en "v8.log" y lo muevo dentro de la carpeta "profiling".*
+
+Vuelvo a la consola y para procesar los datos de profiling de node ejecuto: 
+
+    node.exe --prof-process profiling/NO-consoleLog-v8.log > profiling/NO-consoleLog-v8_prof_process.txt
+
+**REPORT DE ARTILLERY**
+
+![Screenshot](https://buentrack.com/wp-content/uploads/2022/09/RESULTSIN.png)
+
+**REPORT PROFILING DE NODE**
+
+![Screenshot](https://buentrack.com/wp-content/uploads/2022/09/RESULTNODE.png)
+
+**Conclusión:**
+Como podemos ver en las imágenes anteriores, el servidor es prácticamente el doble de eficiente al no incluir el console log, comparando los resultados con y sin el console.log.
+
+**AutoCannon**
+*Se creo la configuración en un archivo llamando benchmark.js*
+
+***Con console.log***
+
+En la carpeta del proyecto ejecuto en consola el siguiente comando:
+
+    node --prof server.js
+
+En una nueva consola en la ruta del proyecto `node profiling/benchmark.js`
+
+**Sin console.log**
+
+En la carpeta del proyecto ejecuto en consola el siguiente comando:
+
+    node --prof server.js
+
+En una nueva consola en la ruta del proyecto `node profiling/benchmark.js`
+
+**REPORTE DE AUTOCANNON**
+
+![Screenshot](https://buentrack.com/wp-content/uploads/2022/09/CANNONRESULT.png)
+
+Conclusión: 
+En la imagen comparativa de resultados podemos apreciar que los tiempos de latencia son mucho menor en el caso de NO utilizar el console.log.
+
+### Perfilamiento del servidor con el modo inspector
+***Prueba con console.log***
+Encendemos el servidor con el comando:
+
+    node --inspect server.js
+
+En el navegador mi caso chrome ponemos:
+
+    chrome://inspect
+
+Luego click en inspect y vamos a la pestaña perfiles y luego click en iniciar.
+
+En una nueva consola en la ruta del proyecto ponemos:
+
+    node profiling/benchmark.js
+
+Finalizado el test, clic en el botón detener en el navegador y busco la función *(anónimas)* que corre el archivo server.js para ver el resultado.
+
+***Prueba sin console.log***
+Encendemos el servidor con el comando:
+
+    node --inspect server.js
+
+En el navegador mi caso chrome ponemos:
+
+    chrome://inspect
+
+Luego click en inspect y vamos a la pestaña perfiles y luego click en iniciar.
+
+En una nueva consola en la ruta del proyecto ponemos:
+
+    node profiling/benchmark.js
+
+Finalizado el test, clic en el botón detener en el navegador y busco la función *(anónimas)* que corre el archivo server.js para ver el resultado.
+
+**REPORTE DE INSPECT NODE**
+
+![Screenshot](https://buentrack.com/wp-content/uploads/2022/09/reporte-inspect-node.png)
+
+Conclusión:
+Se puede apreciar que la linea del console.log nos genera una demora extra de 12.1ms en el procesamiento antes de renderizar la información.
+
+**Diagrama de flama con 0x**
+
+***Prueba con console.log***
+
+Ejecutamos el siguiente comando en la carpeta del proyecto:
+
+    0x server.js
+
+En una nueva consola en la carpeta del proyecto ponemos:
+
+    node profiling/benchmark.js
+Finalizado el test de autocannon, presionamos CTRL + C para cerrar el proceso y vemos que se genera una carpeta y allí dentro encontramos el archivo flamegraph.html" que contiene las graficas.
+
+***Prueba sin console.log***
+
+Ejecutamos el siguiente comando en la carpeta del proyecto:
+
+    0x server.js
+
+En una nueva consola en la carpeta del proyecto ponemos:
+
+    node profiling/benchmark.js
+Finalizado el test de autocannon, presionamos CTRL + C para cerrar el proceso y vemos que se genera una carpeta y allí dentro encontramos el archivo flamegraph.html" que contiene las graficas.
+
+CON CONSOLE.LOG
+
+![Screenshot](https://buentrack.com/wp-content/uploads/2022/09/GRAFICACON1.png)
+
+SIN CONSOLE.LOG
+
+![Screenshot](https://buentrack.com/wp-content/uploads/2022/09/GRAFICASIN1.png)
+
+
+
+
 
  
 
- - taskkill /pid **IDPROCESO** /F => PARA MATAR UN PROCESO DEL SERVIDOR
-
-*Si ejecutamos pm2 status o tasklist /fi "imagename eq node.exe podemos comprobar que el proceso se levanto de vuelta*
-
-## REDIRIGIR TODAS LAS CONSULTAS A /API/RAMDOMS A UN CLUSTER EN EL PUERTO 8081
-
-***En archivo nginx.conf descomentar lo de la primera parte y comentar lo de la segunda***
-
- - node server.js => LEVANTAMOS EL SERVER EN MODO FORK DEFAULT Y PORT
-   8080 DEFAULT
- - node server.js -p 8081 -m CLUSTER => LEVANTAMOS EL SERVER EN MODO
-   CLUSTER Y EL PORT EN 8081
- - nginx.exe levantamos nginx
-
-Visualizamos que todo esta correcto
-
-*Si finalizamos el proceso del servidor en el puerto 8081 y en modo CLUSTER, recibimos un error pero podemos continuar accediendo al resto de las rutas, comprobamos que esta funcionando correctamente.*
-
-## Ejecuta en modo cluster 4 instancias escuchando en los puertos 8082, 8083, 8084 y 8085
-
- - node server.js => LEVANTAMOS EL SERVER EN MODO FORK DEFAULT Y PORT
-   8080 DEFAULT
- - pm2 start server.js --name="Server-1" --node-args=" server.js -p 8082
- - pm2 start server.js --name="Server-2" --node-args=" server.js -p 8083
- - pm2 start server.js --name="Server-3" --node-args=" server.js -p 8084
- - pm2 start server.js --name="Server-5" --node-args=" server.js -p 8085
- - nginx.exe - levantamos nginx
-
-***En archivo nginx.conf comentar lo de la primera parte y des-comentar lo de la segunda***
-
- - Nos dirigimos a /api/randoms y vemos que todo funciona perfectamente.
-
- - Pausamos cada uno de los 4 servidores en PM2 y recibimos un error
-   pero el resto de las rutas son accesibles. Comprobamos que el CLUSTER
-   funciona correctamente.
-
- - Reanudamos los procesos y comprobamos que vuelve /api/randoms al funcionamiento.
-
+ 

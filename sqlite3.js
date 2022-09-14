@@ -9,6 +9,15 @@ const DB = {
   useNullAsDefault: true,
 };
 
-const configSqlDB = knex(DB);
+const DBprod = {
+  client: 'sqlite3',
+  connection: {
+    filename: path.join(__dirname, './db/dbprod.sqlite'),
+  },
+  useNullAsDefault: true,
+};
 
-module.exports = configSqlDB;
+const configSqlDB = knex(DB);
+const configSqlDBProd = knex(DBprod);
+
+module.exports = { configSqlDB, configSqlDBProd };

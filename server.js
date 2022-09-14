@@ -5,11 +5,10 @@ const { Server: IOServer } = require('socket.io');
 const productsManager = require('./controllers/contenedor');
 const messagesManager = require('./controllers/contenedormensajes');
 /* SQLITE3 MENSAJES*/
-const configSqlDB = require('./sqlite3');
+const { configSqlDB, configSqlDBProd } = require('./sqlite3');
 const messagesContainer = new messagesManager(configSqlDB, 'message');
 /* MARIA DB - PRODUCTOS */
-const configMariaDB = require('./mariadb');
-const productsContainer = new productsManager(configMariaDB, 'product');
+const productsContainer = new productsManager(configSqlDBProd, 'product');
 /* MONGO STORE SESION Y COOKIE PARSER */
 
 const MongoStore = require('connect-mongo');
@@ -34,10 +33,6 @@ const { hashPassword, isValidPassword } = require('./utils/hashpassword');
 /* Routes */
 
 const routes = require('./controllers/routes');
-
-/* DotENV */
-
-require('dotenv').config();
 
 /* Config */
 
@@ -99,10 +94,10 @@ if (iscluster && cluster.isPrimary) {
   app.use(
     session({
       store: MongoStore.create({
-        mongoUrl: process.env.MONGOURL,
+        mongoUrl: CONFIG.URLMONGO,
         mongoOptions,
       }),
-      secret: process.env.SECRET,
+      secret: CONFIG.SECRETMONGO,
       resave: false,
       saveUninitialized: false,
       rolling: true, // Reinicia el tiempo de expiracion con cada request

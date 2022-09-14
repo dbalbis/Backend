@@ -114,7 +114,7 @@ if (iscluster && cluster.isPrimary) {
   app.use(passport.session());
 
   /* SERVER */
-  const serverExpress = app.listen(PORT, (err) =>
+  const serverExpress = app.listen(process.env.PORT || 8080, (err) =>
     err
       ? logger.error(`Error en el server: ${err}`)
       : logger.info(

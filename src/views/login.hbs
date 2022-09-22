@@ -1,0 +1,35 @@
+<h1 class="homeTitle">Ingresar!</h1>
+    <div class="container formContainer">
+      <form
+        role="form"
+        action="/login"
+        method="post"
+        id="loginForm"
+        class="productosForm"
+      >
+        <label for="title">Usuario:</label> <br />
+        <input
+          id="username"
+          required
+          placeholder="Ingrese su usuario"
+          type="text"
+          name="username"
+          id=""
+        />
+        <br />
+        <label for="userpassword">Password:</label> <br />
+        <input
+          id="userpassword"
+          required
+          placeholder="Ingrese su contraseña"
+          type="password"
+          name="password"
+          id=""
+        />
+        <br />
+        <input class="buttonSubmit" type="submit" value="Enviar" />
+      </form>
+      <a href="/register">
+        <p class="backLink">¿No tienes cuenta?</p>
+      </a>
+    </div>

@@ -163,6 +163,8 @@ div.messagesPool {
 }
 
 p.backLink {
+
+  padding-top: 15px;
   text-align: center;
 }
 
@@ -209,6 +211,13 @@ img.cartImage{
 div.buttonContainer {
   padding-top: 6%
 }
+
+div.totalPrice{
+  font-size: 30px;
+  padding-top: 25px;
+  text-align: left;
+}
+
 
 
 

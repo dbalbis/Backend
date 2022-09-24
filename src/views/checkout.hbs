@@ -1,0 +1,45 @@
+<div class='container-fluid'>
+  <nav class='customNavbar navbar navbar-light bg-light'>
+    <span class='navbar-brand mb-0 h1'>Bienvenido
+      {{{data.authUser.user}}}, ({{data.authUser.mail}}).</span>
+    <span class='navbar-text'>
+      <img
+        class='avatarImg'
+        src='{{data.authUser.img}}'
+        width='53'
+        height='53'
+        alt='avatar'
+      />
+      <a class='logoutLink' href='logout'>Logout</a>
+    </span>
+  </nav>
+</div>
+
+<div style='text-align: center' class='cartContainer container'>
+  <div class='row gx-1'>
+    <h3>Checkout 🚚📦</h3>
+
+    {{#each cartRender}}
+      <div class='col-lg-4 col-md-6'>
+        <div class='card' style='width: 16rem;'>
+          <h6 class='card-title'>{{data.title}}</h6>
+          <img
+            class='cartImage card-img-top'
+            src='{{data.photo}}'
+            alt='Card image cap'
+          />
+          <div class='card-body'>
+            <p class='card-text'>${{data.price}}</p>
+          </div>
+        </div>
+      </div>
+    {{/each}}
+
+  </div>
+  <div class='totalPrice'>
+    <p>Total: ${{total}}</p>
+
+  </div>
+  <a href='#' class='btn btn-success btn-lg'>Confirmar la Compra</a>
+  <p class='backLink'><a href='/'>Volver</a></p>
+</div>

@@ -17,6 +17,12 @@
 
 <div style='text-align: center' class='cartContainer container'>
   <div class='row gx-1'>
+        {{#if render}}
+      <h3>Tu carrito esta vacio!</h3>
+      <p><i>Para crear un carrito debes crearlo usando Postman: (Post) /api/carrito/_idUsuarioMongo y te devolvera un id de carrito.</i> </p>
+      <p><i>Para agregar un producto debes agregarlo con postman: (Post) /api/_idMongoDeCarrito/productos y por body le pasamos idProd: _idMongo del producto.</i>
+      </p>
+    {{else}}
     <h3>Checkout 🚚📦</h3>
 
     {{#each cartRender}}
@@ -40,6 +46,11 @@
     <p>Total: ${{total}}</p>
 
   </div>
-  <a href='#' class='btn btn-success btn-lg'>Confirmar la Compra</a>
-  <p class='backLink'><a href='/'>Volver</a></p>
+
+  <form class='productosForm' action='/checkout' method='post'>
+    <input class='buttonSubmit' type='submit' value='Confirmar Compra' />
+  </form>
+  {{/if}}
+
+  <p class='backLink'><a meth href='/'>Volver</a></p>
 </div>

@@ -1,4 +1,11 @@
 import { productsModel, cartsModel, usersModel } from '../models/index.js';
+import mailer from '../utils/mailer.js';
+/* import twilioClient from '../utils/twilio.js'; */
+import config from '../config.js';
+import { fileURLToPath } from 'url';
+import path from 'path';
+export const __filename = fileURLToPath(import.meta.url);
+export const __dirname = path.dirname(__filename);
 
 const getCheckout = async (req, res) => {
   const username = req.user.username;
@@ -17,7 +24,7 @@ const getCheckout = async (req, res) => {
       },
     };
 
-    res.render('checkout', { data, products, render });
+    res.render('checkout', { data, render });
   } else {
     /* En caso de que si tenga productos agregados */
     const userCart = await cartsModel.getById(idCart);
@@ -41,6 +48,54 @@ const getCheckout = async (req, res) => {
   }
 };
 
+const postCheckout = async (req, res) => {
+  const username = req.user.username;
+  const carts = await usersModel.getByUserName(username);
+  const idCart = carts.data.cart;
+  const userCart = await cartsModel.getById(idCart);
+  const cartRender = userCart.data.productos;
+  console.log('Prods', cartRender);
+
+  //Envío de mail al nuevo usuario.
+  const mailOptions = {
+    from: 'Tercera entrega | Diego Balbis',
+    to: config.TEST_MAIL,
+    subject: `Nuevo pedido de: ${req.user.username}`,
+    html: `<h1 style="color: red;"> ¡NUEVO PEDIDO RECIBIDO! </h1>
+    <h3 style="color: blue"> Datos del USUARIO </h3>
+    <p>Email: ${req.user.email}</p>
+    <p>Name: ${req.user.name}</p>
+    <p>Address: ${req.user.address}</p>
+    <p>Age: ${req.user.age}</p>
+    <p>Tel: ${req.user.phone}</p>
+    <br>
+    <h3 style="color: blue"> Datos del Pedido</h3>
+    <ul>
+    ${cartRender
+      .map((prod) => {
+        return `<li>Nombre: ${prod.data.title} | Codigo: ${prod.data.code} | Precio unitario: ${prod.data.price} |</li>`;
+      })
+      .join('')}
+  </ul>
+  <p><strong>TOTAL DE LA ORDEN: $${cartRender.reduce(
+    (acc, act) => acc + act.data.price,
+    0
+  )}</p></strong>
+    `,
+  };
+
+  try {
+    await mailer.sendMail(mailOptions);
+  } catch (error) {
+    console.log(error);
+  }
+
+  res.send(
+    `<script type="text/javascript"> alert("Pedido! El pedido llegara mañana."); window.location.href = "/login"; </script>`
+  );
+};
+
 export default {
   getCheckout,
+  postCheckout,
 };

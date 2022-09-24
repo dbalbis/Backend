@@ -86,6 +86,7 @@ router.post('/api/carrito/:_id', cartsController.createCart);
 router.post('/api/:_id/productos', cartsController.addProduct);
 
 /* Checkout */
-router.get('/checkout', checkoutController.getCheckout);
+router.get('/checkout', checkAuthLogout, checkoutController.getCheckout);
+router.post('/checkout', checkAuthLogout, checkoutController.postCheckout);
 
 export default router;

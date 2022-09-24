@@ -8,6 +8,7 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 import passport from 'passport';
 import { checkAuth, checkAuthLogout, checkAuthNo } from '../utils/checkauth.js';
+import cartsController from '../controllers/cartsController.js';
 export const __filename = fileURLToPath(import.meta.url);
 export const __dirname = path.dirname(__filename);
 
@@ -24,7 +25,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-router.get('/', checkAuthNo, productsController.getAll);
+router.get('/', checkAuthNo, productsController.getAll, );
 // Register
 
 router.get('/register', checkAuth, (req, res) => {
@@ -78,4 +79,9 @@ setTimeout(function(){ location.href = '/'},2000)
 
 router.post('/api/productos', productsController.postProduct);
 router.get('/api/productos', productsController.getAll);
+
+/* Carrito */
+router.post('/api/carrito/:_id', cartsController.createCart);
+router.post('/api/:_id/productos', cartsController.addProduct);
+
 export default router;

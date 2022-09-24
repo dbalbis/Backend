@@ -10,7 +10,7 @@ function checkAuth(req, res, next) {
 
 function checkAuthNo(req, res, next) {
   if (!req.isAuthenticated()) {
-    res.redirect('/register');
+    res.redirect('/login');
   } else {
     next();
   }

@@ -47,4 +47,47 @@ export class ContenedorMongo {
       };
     }
   }
+
+  async updateOne(id, NewDataObj) {
+    try {
+      await this.model.updateOne({ _id: id }, { $set: NewDataObj });
+    } catch (error) {
+      console.log(`error in updating ${this.collection}: ${error}`);
+      return {
+        error: { message: `error in updating ${this.collection}`, status: 500 },
+      };
+    }
+  }
+
+  async getById(id) {
+    try {
+      const data = await this.model.findOne({ _id: id });
+      if (data) return { data };
+      return {
+        error: { message: `no ${this.collection} with ID: ${id}`, status: 404 },
+      };
+    } catch (error) {
+      console.log(`error in getting ${this.collection}: ${error}`);
+      return {
+        error: { message: `error in getting ${this.collection}`, status: 500 },
+      };
+    }
+  }
+  async getByUserName(username) {
+    try {
+      const data = await this.model.findOne({ username: username });
+      if (data) return { data };
+      return {
+        error: {
+          message: `no ${this.collection} with ID: ${username}`,
+          status: 404,
+        },
+      };
+    } catch (error) {
+      console.log(`error in getting ${this.collection}: ${error}`);
+      return {
+        error: { message: `error in getting ${this.collection}`, status: 500 },
+      };
+    }
+  }
 }

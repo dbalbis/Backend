@@ -15,6 +15,40 @@
   </nav>
 </div>
 
+<div style='text-align: center' class='cartContainer container'>
+  
+  <div class='row gx-2'>
+    {{#if render}}
+      <h3>Tu carrito esta vacio!</h3>
+      <p><i>Para crear un carrito debes crearlo usando Postman: (Post) /api/carrito/_idUsuarioMongo y te devolvera un id de carrito.</i> </p>
+      <p><i>Para agregar un producto debes agregarlo con postman: (Post) /api/_idMongoDeCarrito/productos y por body le pasamos idProd: _idMongo del producto.</i>
+      </p>
+    {{else}}
+    <h3>Tu carrito 🛒</h3>
+      {{#each cartRender}}
+        <div class='col-lg-2 col-md-2'>
+          <div class='card' style='width: 8rem;'>
+            <h6 class='card-title'>{{data.title}}</h6>
+            <img
+              class='cartImage card-img-top'
+              src='{{data.photo}}'
+              alt='Card image cap'
+            />
+            <div class='card-body'>
+              <p class='card-text'>{{data.price}}</p>
+            </div>
+          </div>
+        </div>
+      {{/each}} <div class='buttonContainer col-lg-2 col-md-2'>
+      <a href='#' class='btn btn-success'>Finalizar la compra</a>
+    {{/if}}
+
+   
+
+    </div>
+  </div>
+</div>
+
 <h2 style='text-align: center'>Productos Disponibles</h2>
 
 <div class='container prodsContainer'>

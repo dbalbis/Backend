@@ -1,6 +1,6 @@
 import { productsModel, cartsModel, usersModel } from '../models/index.js';
 import mailer from '../utils/mailer.js';
-/* import twilioClient from '../utils/twilio.js'; */
+import twilioClient from '../utils/twilio.js';
 import config from '../config.js';
 import { fileURLToPath } from 'url';
 import path from 'path';
@@ -54,7 +54,6 @@ const postCheckout = async (req, res) => {
   const idCart = carts.data.cart;
   const userCart = await cartsModel.getById(idCart);
   const cartRender = userCart.data.productos;
-  console.log('Prods', cartRender);
 
   //Envío de mail al nuevo usuario.
   const mailOptions = {
@@ -84,14 +83,45 @@ const postCheckout = async (req, res) => {
     `,
   };
 
+  /* Envio de mensaje de Whatsapp al admin */
+  const wspOptions = {
+    body: `¡NUEVO PEDIDO RECIBIDO!
+    *Datos del USUARIO*
+    Email: ${req.user.email}
+    Name: ${req.user.name}
+    Address: ${req.user.address}
+    Age: ${req.user.age}
+    Tel: ${req.user.phone}
+    
+    *Datos del Pedido*
+    
+    ${cartRender
+      .map((prod) => {
+        return `
+        Nombre: ${prod.data.title}
+        Codigo: ${prod.data.code}
+        Precio unitario: ${prod.data.price}`;
+      })
+      .join('\n')}
+  
+  *TOTAL DE LA ORDEN: $${cartRender.reduce(
+    (acc, act) => acc + act.data.price,
+    0
+  )}*
+    `,
+    from: `whatsapp:${config.twilioWhatsappFrom}`,
+    to: `whatsapp:${config.twilioWhatsappTo}`,
+  };
+
   try {
     await mailer.sendMail(mailOptions);
+    await twilioClient.messages.create(wspOptions);
   } catch (error) {
     console.log(error);
   }
 
   res.send(
-    `<script type="text/javascript"> alert("Pedido! El pedido llegara mañana."); window.location.href = "/login"; </script>`
+    `<script type="text/javascript"> alert("Orden recibida! El pedido llegara mañana."); window.location.href = "/login"; </script>`
   );
 };
 

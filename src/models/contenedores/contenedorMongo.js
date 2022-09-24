@@ -35,4 +35,16 @@ export class ContenedorMongo {
       console.log('Error en', error);
     }
   }
+
+  async getAll() {
+    try {
+      const data = await this.model.find().lean();
+      return { data };
+    } catch (error) {
+      logger.warn(`error in getting ${this.collection}: ${error}`);
+      return {
+        error: { message: `error in getting ${this.collection}`, status: 500 },
+      };
+    }
+  }
 }

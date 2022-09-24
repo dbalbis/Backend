@@ -1,1 +1,46 @@
-<h1>INDEX</h1>
+<div class='container-fluid'>
+  <nav class='customNavbar navbar navbar-light bg-light'>
+    <span class='navbar-brand mb-0 h1'>Bienvenido
+      {{{data.authUser.user}}}, ({{data.authUser.mail}}).</span>
+    <span class='navbar-text'>
+      <img
+        class='avatarImg'
+        src='{{data.authUser.img}}'
+        width='53'
+        height='53'
+        alt='avatar'
+      />
+      <a class='logoutLink' href='logout'>Logout</a>
+    </span>
+  </nav>
+</div>
+
+<h2 style='text-align: center'>Productos Disponibles</h2>
+
+<div class='container prodsContainer'>
+
+  <div class='row gx-1'>
+
+    {{#each products.data}}
+
+      <div class='col-lg-4 col-md-6'>
+        <div class='card' style='width: 18rem;'>
+          <img
+            class='card-img-top cardImg'
+            src='{{photo}}'
+            alt='Card image cap'
+          />
+          <div class='card-body'>
+            <h5 class='card-title'>{{title}}</h5>
+            <p class='card-text'>{{desc}}</p>
+            <h6 class='card-subtitle mb-2 text-muted'>${{price}}</h6>
+            <a href='#' class='btn btn-success'>Comprar</a>
+          </div>
+        </div>
+      </div>
+
+    {{/each}}
+
+  </div>
+
+</div>

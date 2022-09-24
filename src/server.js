@@ -9,6 +9,7 @@ import MongoStore from 'connect-mongo';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import passport from 'passport';
+import { checkAuth, checkAuthLogout } from './utils/checkauth.js';
 export const __filename = fileURLToPath(import.meta.url);
 export const __dirname = path.dirname(__filename);
 

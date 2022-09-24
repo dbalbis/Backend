@@ -2,29 +2,32 @@ import { Router } from 'express';
 const router = Router();
 import multer from 'multer';
 import registerController from '../controllers/registerController.js';
+import productsController from '../controllers/productsController.js';
 import loginController from '../controllers/loginController.js';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import passport from 'passport';
+import { checkAuth, checkAuthLogout, checkAuthNo } from '../utils/checkauth.js';
 export const __filename = fileURLToPath(import.meta.url);
 export const __dirname = path.dirname(__filename);
 
+//Multer
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, __dirname + '/../public/uploads');
+    cb(null, __dirname + '/../public/uploads/avatars');
   },
   filename: (req, file, cb) => {
     cb(null, file.originalname);
   },
 });
+
 const upload = multer({ storage });
 
-router.get('/', (req, res) => {
-  res.render('index');
-});
-
+router.get('/', checkAuthNo, productsController.getAll);
 // Register
-router.get('/register', (req, res) => {
+
+router.get('/register', checkAuth, (req, res) => {
   res.render('register');
 });
 
@@ -42,7 +45,7 @@ router.post(
 
 /* Login */
 
-router.get('/login', (req, res) => {
+router.get('/login', checkAuth, (req, res) => {
   res.render('login');
 });
 
@@ -56,4 +59,23 @@ router.get('/login/error', (req, res) => {
   res.status(400).json('Invalid Credentials!');
 });
 
+/* Logout */
+
+router.get('/logout', checkAuthLogout, (req, res) => {
+  let user = req.user.username;
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.send(`<h1>Hasta luego ${user}</h1>
+<script type="text/javascript">
+setTimeout(function(){ location.href = '/'},2000)
+</script>`);
+  });
+});
+
+/* Productos */
+
+router.post('/api/productos', productsController.postProduct);
+router.get('/api/productos', productsController.getAll);
 export default router;

@@ -3,7 +3,11 @@ let productsModel;
 let usersModel;
 
 const { default: usersModelDaoMongo } = await import('./daos/usersModel.js');
+const { default: productsModelDaoMongo } = await import(
+  './daos/productsModel.js'
+);
 
 usersModel = usersModelDaoMongo;
+productsModel = productsModelDaoMongo;
 
-export default usersModel;
+export { usersModel, productsModel };

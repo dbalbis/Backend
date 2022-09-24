@@ -169,4 +169,32 @@ p.backLink {
 p.userInfo {
   font-size: 18px;
 }
+
+img.avatarImg {
+  margin: 5px;
+  border-radius: 50%;
+}
+
+a.logoutLink {
+  margin-left: 5px;
+  font-size: 18px;
+}
+
+nav.customNavbar{
+  border-bottom: 5px solid #fbbc05 !important
+}
+
+div.prodsContainer {
+  margin-top: 25px;
+  text-align: center;
+}
+
+img.cardImg {
+  height: 360px;
+  width: auto;
+}
+
+
+
+
 /*# sourceMappingURL=styles.css.map */

@@ -14,8 +14,11 @@ const getCheckout = async (req, res) => {
   if (carts?.error)
     return res.status(carts.error.status).json(carts.error.message);
   const idCart = carts.data.cart;
+  const userCart = await cartsModel.getById(idCart);
+  const productsCart = userCart.data.productos;
+  
   /* En caso que el usuario no tenga ningun Producto */
-  if (idCart === '') {
+  if (idCart === '' || productsCart.length == 0) {
     const render = true;
     const data = {
       authUser: {
@@ -28,7 +31,6 @@ const getCheckout = async (req, res) => {
     res.render('checkout', { data, render });
   } else {
     /* En caso de que si tenga productos agregados */
-    const userCart = await cartsModel.getById(idCart);
     const cartRender = userCart.data.productos;
 
     const data = {
@@ -128,6 +130,9 @@ const postCheckout = async (req, res) => {
   } catch (error) {
     console.log(error);
   }
+
+  await cartsModel.deleteById(idCart);
+  await usersModel.updateOne(req.user._id, { cart: '' });
 
   res.send(
     `<script type="text/javascript"> alert("Orden recibida! El pedido llegara mañana."); window.location.href = "/login"; </script>`

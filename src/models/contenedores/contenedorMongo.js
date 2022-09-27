@@ -90,4 +90,26 @@ export class ContenedorMongo {
       };
     }
   }
+
+  async updateOne(id, NewDataObj) {
+    try {
+      await this.model.updateOne({ _id: id }, { $set: NewDataObj });
+    } catch (error) {
+      console.log(`error in updating ${this.collection}: ${error}`);
+      return {
+        error: { message: `error in updating ${this.collection}`, status: 500 },
+      };
+    }
+  }
+
+  async deleteById(id) {
+    try {
+      await this.model.deleteOne({ _id: id });
+    } catch (error) {
+      console.log(`error eliminando ${this.collection}: ${error}`);
+      return {
+        error: { message: `error eliminando${this.collection}`, status: 500 },
+      };
+    }
+  }
 }

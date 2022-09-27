@@ -11,4 +11,6 @@ export default {
   twilioAuthToken: process.env.twilioAuthToken,
   twilioWhatsappFrom: process.env.twilioWhatsappFrom,
   twilioWhatsappTo: process.env.twilioWhatsappTo,
+  twilioSMSFrom: process.env.twilioSMSFrom,
+  twilioSMSTo: process.env.twilioSMSTo,
 };

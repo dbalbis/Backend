@@ -8,6 +8,7 @@ export const __filename = fileURLToPath(import.meta.url);
 export const __dirname = path.dirname(__filename);
 
 const getCheckout = async (req, res) => {
+  console.log(config.twilioSMSFrom, config.twilioSMSTo);
   const username = req.user.username;
   const carts = await usersModel.getByUserName(username);
   if (carts?.error)
@@ -113,9 +114,17 @@ const postCheckout = async (req, res) => {
     to: `whatsapp:${config.twilioWhatsappTo}`,
   };
 
+  //Envio de SMS al cliente
+  const smsOptions = {
+    body: `Hola, ${req.user.name}. Su pedido #${idCart} ha sido recibido y se encuentra en proceso.`,
+    from: config.twilioSMSFrom,
+    to: config.twilioSMSTo, //`{req.user.phone} Acordarse de registrarlo sin el primer 0`
+  };
+
   try {
     await mailer.sendMail(mailOptions);
     await twilioClient.messages.create(wspOptions);
+    await twilioClient.messages.create(smsOptions);
   } catch (error) {
     console.log(error);
   }

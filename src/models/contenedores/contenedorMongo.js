@@ -1,9 +1,10 @@
 import mongoose from 'mongoose';
 import config from '../../config.js';
+import logger from '../../utils/logger.js';
 
 mongoose.connect(config.URLMONGO, (err, res) => {
   if (err) throw err;
-  return console.log('Base de datos MONGO conectada.');
+  return logger.info('Base de datos MONGO conectada.');
 });
 
 export class ContenedorMongo {
@@ -18,7 +19,7 @@ export class ContenedorMongo {
       const res = await this.model.create(data);
       return res;
     } catch (error) {
-      console.log(`error agregando ${this.collection}: ${error}`);
+      logger.error(`error agregando ${this.collection}: ${error}`);
     }
   }
 
@@ -32,7 +33,21 @@ export class ContenedorMongo {
         return null;
       }
     } catch (error) {
-      console.log('Error en', error);
+      logger.error('Error en', error);
+    }
+  }
+
+  async getByCartId(cartId) {
+    try {
+      const data = await this.model.find();
+      if (data.some((data) => data['cart'] === cartId)) {
+        const elemento = this.model.findOne({ cart: `${cartId}` });
+        return elemento;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      logger.error('Error en', error);
     }
   }
 
@@ -52,7 +67,7 @@ export class ContenedorMongo {
     try {
       await this.model.updateOne({ _id: id }, { $set: NewDataObj });
     } catch (error) {
-      console.log(`error in updating ${this.collection}: ${error}`);
+      logger.error(`error in updating ${this.collection}: ${error}`);
       return {
         error: { message: `error in updating ${this.collection}`, status: 500 },
       };
@@ -67,7 +82,7 @@ export class ContenedorMongo {
         error: { message: `no ${this.collection} with ID: ${id}`, status: 404 },
       };
     } catch (error) {
-      console.log(`error in getting ${this.collection}: ${error}`);
+      logger.error(`error in getting ${this.collection}: ${error}`);
       return {
         error: { message: `error in getting ${this.collection}`, status: 500 },
       };
@@ -84,7 +99,7 @@ export class ContenedorMongo {
         },
       };
     } catch (error) {
-      console.log(`error in getting ${this.collection}: ${error}`);
+      logger.error(`error in getting ${this.collection}: ${error}`);
       return {
         error: { message: `error in getting ${this.collection}`, status: 500 },
       };
@@ -95,7 +110,7 @@ export class ContenedorMongo {
     try {
       await this.model.updateOne({ _id: id }, { $set: NewDataObj });
     } catch (error) {
-      console.log(`error in updating ${this.collection}: ${error}`);
+      logger.error(`error in updating ${this.collection}: ${error}`);
       return {
         error: { message: `error in updating ${this.collection}`, status: 500 },
       };
@@ -106,7 +121,7 @@ export class ContenedorMongo {
     try {
       await this.model.deleteOne({ _id: id });
     } catch (error) {
-      console.log(`error eliminando ${this.collection}: ${error}`);
+      logger.error(`error eliminando ${this.collection}: ${error}`);
       return {
         error: { message: `error eliminando${this.collection}`, status: 500 },
       };

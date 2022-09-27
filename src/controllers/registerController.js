@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 import config from '../config.js';
 import mailer from '../utils/mailer.js';
+import logger from '../utils/logger.js';
 
 export const __filename = fileURLToPath(import.meta.url);
 export const __dirname = path.dirname(__filename);
@@ -40,7 +41,7 @@ const postRegister = async (req, res) => {
   try {
     await mailer.sendMail(mailOptions);
   } catch (error) {
-    console.log(error);
+    logger.error(error);
   }
 
   res.send(

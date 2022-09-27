@@ -12,9 +12,9 @@ class UsersModel extends ContenedorMongo {
       avatar: { type: String, require: true },
       phone: { type: Number, require: true },
       cart: { type: String, default: '' },
+      hasproducts: { type: Boolean, default: false },
     });
   }
-  
 }
 
 export default new UsersModel();

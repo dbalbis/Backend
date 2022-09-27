@@ -2,6 +2,7 @@ import { config } from 'dotenv';
 config();
 
 export default {
+  MODO: process.env.MODO || "FORK",
   PORT: process.env.PORT || 8080,
   URLMONGO: process.env.URLMONGO,
   SECRETMONGO: process.env.SECRET,

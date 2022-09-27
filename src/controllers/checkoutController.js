@@ -4,21 +4,20 @@ import twilioClient from '../utils/twilio.js';
 import config from '../config.js';
 import { fileURLToPath } from 'url';
 import path from 'path';
+import logger from '../utils/logger.js';
 export const __filename = fileURLToPath(import.meta.url);
 export const __dirname = path.dirname(__filename);
 
 const getCheckout = async (req, res) => {
-  console.log(config.twilioSMSFrom, config.twilioSMSTo);
   const username = req.user.username;
   const carts = await usersModel.getByUserName(username);
   if (carts?.error)
     return res.status(carts.error.status).json(carts.error.message);
   const idCart = carts.data.cart;
   const userCart = await cartsModel.getById(idCart);
-  const productsCart = userCart.data.productos;
-  
+
   /* En caso que el usuario no tenga ningun Producto */
-  if (idCart === '' || productsCart.length == 0) {
+  if (idCart === '' || carts.data.hasproducts === false) {
     const render = true;
     const data = {
       authUser: {
@@ -128,11 +127,12 @@ const postCheckout = async (req, res) => {
     await twilioClient.messages.create(wspOptions);
     await twilioClient.messages.create(smsOptions);
   } catch (error) {
-    console.log(error);
+    logger.error(error);
   }
 
   await cartsModel.deleteById(idCart);
   await usersModel.updateOne(req.user._id, { cart: '' });
+  await usersModel.updateOne(req.user._id, { hasproducts: false });
 
   res.send(
     `<script type="text/javascript"> alert("Orden recibida! El pedido llegara mañana."); window.location.href = "/login"; </script>`

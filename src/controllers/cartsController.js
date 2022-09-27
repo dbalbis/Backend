@@ -10,7 +10,6 @@ const createCart = async (req, res) => {
   const edit = await usersModel.updateOne(req.params._id, {
     cart: data._id,
   });
-  console.log('id', data._id);
   if (edit?.error)
     return res.status(data.error.status).json(data.error.message);
 
@@ -21,6 +20,7 @@ const createCart = async (req, res) => {
 const addProduct = async (req, res) => {
   const idCart = req.params._id;
   const idProd = req.body.idProd;
+  const getByCart = await usersModel.getByCartId(idCart);
   const product = await productsModel.getById(idProd);
   if (product?.error)
     return res.status(product.error.status).json(product.error.message);
@@ -32,6 +32,9 @@ const addProduct = async (req, res) => {
   if (!prodInCart) {
     productos.push(product);
     const data = await cartsModel.updateOne(idCart, { productos });
+    await usersModel.updateOne(getByCart._id, {
+      hasproducts: true,
+    });
     if (data?.error)
       return res.status(data.error.status).json(data.error.message);
     res.sendStatus(204);

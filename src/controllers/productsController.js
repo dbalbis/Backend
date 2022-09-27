@@ -6,10 +6,8 @@ const getAll = async (req, res) => {
   if (carts?.error)
     return res.status(carts.error.status).json(carts.error.message);
   const idCart = carts.data.cart;
-  const userCart = await cartsModel.getById(idCart);
-  const productsCart = userCart.data.productos;
-  /* En caso que el usuario no tenga ningun Producto */
-  if (idCart === '' || productsCart.length == 0) {
+
+  if (idCart === '' || carts.data.hasproducts === false) {
     const render = true;
     const products = await productsModel.getAll();
     if (products?.error)

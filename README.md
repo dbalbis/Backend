@@ -86,10 +86,13 @@ Para finalizar la compra clickeamos el botón *Finalizar la compra* y veremos nu
 **Relizando las pruebas con Artillery en modo CLUSTER**
 
 *En modo Cluster*
+
 ![Screenshot](https://buentrack.com/wp-content/uploads/2022/09/resultCLUSTER.png)
 
 *En Modo Fork*
-![Screenshot](https://buentrack.com/wp-content/uploads/2022/09/ResultFORK.png)
+
+![Screenshot](https://buentrack.com/wp-content/uploads/2022/09/FORK.png)
+
 
 *Conclusión: Podemos apreciar que el tiempo de respuesta y la cantidad de solicitudes procesadas es mayor en modo CLUSTER ya que utiliza mas núcleos para atender estos procesos.*
 

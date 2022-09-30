@@ -83,7 +83,15 @@ Para finalizar la compra clickeamos el botón *Finalizar la compra* y veremos nu
 
 *El proyecto trabaja con MongoAtlas, y se uso Winston para realizar los mensajes a la consola por logs. Tambien el servidor puede funcionar en modo FORK o CLUSTER definiendolo desde el archivo .env (Default FORK).*
 
+**Relizando las pruebas con Artillery en modo CLUSTER**
 
+*En modo Cluster*
+![Screenshot](https://buentrack.com/wp-content/uploads/2022/09/resultCLUSTER.png)
+
+*En Modo Fork*
+![Screenshot](https://buentrack.com/wp-content/uploads/2022/09/ResultFORK.png)
+
+*Conclusión: Podemos apreciar que el tiempo de respuesta y la cantidad de solicitudes procesadas es mayor en modo CLUSTER ya que utiliza mas núcleos para atender estos procesos.*
 
  
 

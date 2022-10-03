@@ -1,0 +1,10 @@
+[ERROR] | 03-10-2022 01:44 | pid: 13468: error agregando usersV3: MongoServerError: E11000 duplicate key error collection: db.usersv3 index: username_1 dup key: { username: "Nuevo" }
+[ERROR] | 03-10-2022 01:50 | pid: 10248: self signed certificate in certificate chain
+[ERROR] | 03-10-2022 02:06 | pid: 14212: self signed certificate in certificate chain
+[ERROR] | 03-10-2022 02:11 | pid: 11708: self signed certificate in certificate chain
+[ERROR] | 03-10-2022 02:40 | pid: 11716: Se produjo un error al agregar el producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 03-10-2022 02:42 | pid: 13908: Se produjo un error al agregar el producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 03-10-2022 02:47 | pid: 3668: Se produjo un error al agregar el producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 03-10-2022 02:49 | pid: 14040: Se produjo un error al agregar el producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 03-10-2022 02:50 | pid: 14040: Se produjo un error al agregar el producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 03-10-2022 02:50 | pid: 10148: self signed certificate in certificate chain

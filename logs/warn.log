@@ -8,3 +8,25 @@
 [ERROR] | 03-10-2022 02:49 | pid: 14040: Se produjo un error al agregar el producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
 [ERROR] | 03-10-2022 02:50 | pid: 14040: Se produjo un error al agregar el producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
 [ERROR] | 03-10-2022 02:50 | pid: 10148: self signed certificate in certificate chain
+[ERROR] | 05-10-2022 01:42 | pid: 6488: Error desconectando la base de datos
+[ERROR] | 05-10-2022 01:43 | pid: 11224: Error desconectando la base de datos
+[ERROR] | 05-10-2022 01:52 | pid: 9608: self signed certificate in certificate chain
+[ERROR] | 05-10-2022 02:09 | pid: 11808: Se produjo un error al obtener los productos TypeError: Cannot read properties of undefined (reading 'username')
+[ERROR] | 05-10-2022 02:17 | pid: 7188: Se produjo un error al obtener los productos TypeError: Cannot read properties of undefined (reading 'username')
+[ERROR] | 05-10-2022 02:35 | pid: 7732: Hubo un error en Passport mong is not defined
+[ERROR] | 05-10-2022 02:36 | pid: 7036: Hubo un error en Passport MongoClient.connect is not a function
+[ERROR] | 05-10-2022 02:36 | pid: 8724: Hubo un error en Passport mongooseconnect is not defined
+[ERROR] | 05-10-2022 02:39 | pid: 9692: Hubo un error en Passport mongooseconnect is not defined
+[ERROR] | 05-10-2022 02:48 | pid: 12888: Error en Client must be connected before running operations
+[ERROR] | 05-10-2022 02:48 | pid: 12888: Error en Client must be connected before running operations
+[ERROR] | 05-10-2022 02:49 | pid: 12776: Error en Client must be connected before running operations
+[ERROR] | 05-10-2022 02:58 | pid: 7804: Se produjo un error al agregar el producto MongoNotConnectedError: Client must be connected before running operations
+[ERROR] | 05-10-2022 02:59 | pid: 14300: Se produjo un error al agregar el producto MongoNotConnectedError: Client must be connected before running operations
+[ERROR] | 05-10-2022 03:01 | pid: 14768: self signed certificate in certificate chain
+[ERROR] | 05-10-2022 03:03 | pid: 10256: Se produjo un error al agregar el producto MongoNotConnectedError: Client must be connected before running operations
+[ERROR] | 05-10-2022 03:11 | pid: 9280: Se produjo un error al agregar el producto TypeError: Cannot read properties of undefined (reading 'push')
+[ERROR] | 05-10-2022 03:12 | pid: 9280: Se produjo un error al agregar el producto MongoNotConnectedError: Client must be connected before running operations
+[ERROR] | 05-10-2022 03:14 | pid: 14744: Se produjo un error al agregar el producto MongoNotConnectedError: Client must be connected before running operations
+[ERROR] | 05-10-2022 03:17 | pid: 7836: Se produjo un error al agregar el producto MongoNotConnectedError: Client must be connected before running operations
+[ERROR] | 05-10-2022 03:18 | pid: 14736: self signed certificate in certificate chain
+[ERROR] | 05-10-2022 03:21 | pid: 14736: Se produjo un error al agregar el producto TypeError: Cannot read properties of undefined (reading 'push')

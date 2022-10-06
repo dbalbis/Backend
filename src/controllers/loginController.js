@@ -11,6 +11,7 @@ passport.use(
   'login',
   new LocalStrategy(
     { usernameField: 'username' },
+
     async (username, password, done) => {
       const user = await usersService.getUser(username);
 
@@ -22,7 +23,7 @@ passport.use(
   )
 );
 
-passport.serializeUser((user, done) => {
+passport.serializeUser(async (user, done) => {
   done(null, user.username);
 });
 

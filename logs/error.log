@@ -30,3 +30,34 @@
 [ERROR] | 05-10-2022 03:17 | pid: 7836: Se produjo un error al agregar el producto MongoNotConnectedError: Client must be connected before running operations
 [ERROR] | 05-10-2022 03:18 | pid: 14736: self signed certificate in certificate chain
 [ERROR] | 05-10-2022 03:21 | pid: 14736: Se produjo un error al agregar el producto TypeError: Cannot read properties of undefined (reading 'push')
+[ERROR] | 06-10-2022 22:34 | pid: 9684: Se produjo un error al obtener los productos ReferenceError: Cannot access 'userDTO' before initialization
+[ERROR] | 06-10-2022 22:34 | pid: 10736: Se produjo un error al obtener los productos ReferenceError: Cannot access 'userDTO' before initialization
+[ERROR] | 06-10-2022 22:35 | pid: 10380: error in getting cartv3: MongoNotConnectedError: Client must be connected before running operations
+[ERROR] | 06-10-2022 22:35 | pid: 10380: Se produjo un error al obtener los productos TypeError: Cannot read properties of undefined (reading 'productos')
+[ERROR] | 06-10-2022 22:45 | pid: 14448: Se produjo un error al obtener los productos ReferenceError: UserDTO is not defined
+[ERROR] | 06-10-2022 22:48 | pid: 13204: Se produjo un error al obtener los productos ReferenceError: allUsers is not defined
+[ERROR] | 06-10-2022 22:51 | pid: 11920: Se produjo un error al obtener los productos ReferenceError: UserDTO is not defined
+[ERROR] | 06-10-2022 22:54 | pid: 9640: Se produjo un error al obtener los productos TypeError: usersModel.getll is not a function
+[ERROR] | 06-10-2022 22:55 | pid: 8824: Se produjo un error al obtener los productos TypeError: usersModel.getll is not a function
+[ERROR] | 06-10-2022 23:03 | pid: 8104: Se produjo un error al obtener los productos TypeError: Class constructor UserDTO cannot be invoked without 'new'
+[ERROR] | 06-10-2022 23:03 | pid: 12008: error in getting cartv3: MongoNotConnectedError: Client must be connected before running operations
+[ERROR] | 06-10-2022 23:03 | pid: 12008: Se produjo un error al obtener los productos TypeError: Cannot read properties of undefined (reading 'productos')
+[ERROR] | 06-10-2022 23:03 | pid: 12008: Se produjo un error al obtener los productos TypeError: Cannot convert undefined or null to object
+[ERROR] | 06-10-2022 23:06 | pid: 14736: Se produjo un error al obtener los productos TypeError: Cannot convert undefined or null to object
+[ERROR] | 06-10-2022 23:10 | pid: 6404: Se produjo un error al obtener los productos ReferenceError: carts is not defined
+[ERROR] | 06-10-2022 23:13 | pid: 12600: Se produjo un error al obtener los productos ReferenceError: cart is not defined
+[ERROR] | 06-10-2022 23:14 | pid: 11244: Se produjo un error al obtener los productos TypeError: Object.entries is not iterable
+[ERROR] | 06-10-2022 23:18 | pid: 7272: Se produjo un error al obtener los productos TypeError: Object.entries is not iterable
+[ERROR] | 06-10-2022 23:19 | pid: 14444: Se produjo un error al obtener los productos TypeError: Cannot convert undefined or null to object
+[ERROR] | 06-10-2022 23:20 | pid: 14444: Se produjo un error al obtener los productos TypeError: Cannot convert undefined or null to object
+[ERROR] | 06-10-2022 23:22 | pid: 15664: Se produjo un error al obtener los productos TypeError: Cannot read properties of undefined (reading 'username')
+[ERROR] | 06-10-2022 23:23 | pid: 2712: Se produjo un error al obtener los productos TypeError: Cannot read properties of undefined (reading 'username')
+[ERROR] | 06-10-2022 23:23 | pid: 2712: Se produjo un error al obtener los productos TypeError: Cannot read properties of undefined (reading 'username')
+[ERROR] | 06-10-2022 23:25 | pid: 6668: Se produjo un error al obtener los productos TypeError: data is not iterable
+[ERROR] | 06-10-2022 23:26 | pid: 7488: Se produjo un error al obtener los productos TypeError: object is not iterable (cannot read property Symbol(Symbol.iterator))
+[ERROR] | 06-10-2022 23:28 | pid: 12508: Se produjo un error al obtener los productos ReferenceError: userInfo is not defined
+[ERROR] | 06-10-2022 23:36 | pid: 12432: Se produjo un error al obtener los productos ReferenceError: userInfo is not defined
+[ERROR] | 06-10-2022 23:36 | pid: 15600: Se produjo un error al obtener los productos ReferenceError: userInfo is not defined
+[ERROR] | 06-10-2022 23:37 | pid: 8884: Se produjo un error al obtener los productos ReferenceError: userInfo is not defined
+[ERROR] | 06-10-2022 23:38 | pid: 4416: self signed certificate in certificate chain
+[ERROR] | 06-10-2022 23:42 | pid: 11220: Se produjo un error al traer el carrito ReferenceError: userDTO is not defined

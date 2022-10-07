@@ -1,5 +1,14 @@
 import { usersModel } from '../models/index.js';
 
+const getAllUsers = async (username) => {
+  try {
+    const allUsers = await usersModel.getAll();
+    return allUsers;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const getUser = async (username) => {
   try {
     const user = await usersModel.getUser(username);
@@ -17,8 +26,6 @@ const getByCartId = async (idCart) => {
     throw error;
   }
 };
-
-
 
 const updateOne = async (userId, value) => {
   try {
@@ -48,6 +55,7 @@ const postRegister = async (user) => {
 };
 
 export default {
+  getAllUsers,
   getUser,
   getByCartId,
   getByUserName,

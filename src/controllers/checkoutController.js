@@ -6,6 +6,7 @@ import config from '../config.js';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import logger from '../utils/logger.js';
+import userDTO from '../classes/userDTO.js';
 export const __filename = fileURLToPath(import.meta.url);
 export const __dirname = path.dirname(__filename);
 
@@ -13,6 +14,7 @@ const getCheckout = async (req, res) => {
   try {
     const username = req.user.username;
     const carts = await usersService.getByUserName(username);
+    const userInfo = carts;
     if (carts?.error)
       return res.status(carts.error.status).json(carts.error.message);
     const idCart = carts.data.cart;
@@ -21,26 +23,16 @@ const getCheckout = async (req, res) => {
     /* En caso que el usuario no tenga ningun Producto */
     if (idCart === '' || carts.data.hasproducts === false) {
       const render = true;
-      const data = {
-        authUser: {
-          user: req.user.username,
-          img: req.user.avatar,
-          mail: req.user.email,
-        },
-      };
+      /* Info de usuario desde el DTO */
+      const data = new userDTO(userInfo);
 
       res.render('checkout', { data, render });
     } else {
       /* En caso de que si tenga productos agregados */
       const cartRender = userCart.data.productos;
 
-      const data = {
-        authUser: {
-          user: req.user.username,
-          img: req.user.avatar,
-          mail: req.user.email,
-        },
-      };
+      /* Info de usuario desde el DTO */
+      const data = new userDTO(userInfo);
       /* Precio total */
       let total = 0;
 

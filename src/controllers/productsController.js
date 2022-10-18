@@ -6,35 +6,8 @@ import logger from '../utils/logger.js';
 
 const getAll = async (req, res) => {
   try {
-    const username = req.user.username;
-    const carts = await usersService.getByUserName(username);
-    const userInfo = carts;
-    if (carts?.error)
-      return res.status(carts.error.status).json(carts.error.message);
-    const idCart = carts.data.cart;
-
-    if (idCart === '' || carts.data.hasproducts === false) {
-      const render = true;
-      const products = await productsService.getAll();
-      if (products?.error)
-        return res.status(products.error.status).json(products.error.message);
-      /* Info de usuario desde el DTO */
-      const data = new userDTO(userInfo);
-
-      res.render('index', { data, products, render });
-    } else {
-      /* En caso de que si tenga productos agregados */
-      const userCart = await cartsService.getById(idCart);
-      const cartRender = userCart.data.productos;
-
-      const products = await productsService.getAll();
-      if (products?.error)
-        return res.status(products.error.status).json(products.error.message);
-      /* Info de usuario desde el DTO */
-      const data = new userDTO(userInfo);
-
-      res.render('index', { data, products, cartRender });
-    }
+    const data = await productsService.getAll();
+    res.json({ data }).sendStatus(200);
   } catch (error) {
     logger.error(`Se produjo un error al obtener los productos ${error}`);
   }
@@ -44,6 +17,7 @@ const postProduct = async (req, res) => {
   try {
     const product = req.body;
     const data = await productsService.postProduct(product);
+    res.json({ data }).sendStatus(200);
     if (data?.error)
       return res.status(data.error.status).json(data.error.message);
     res.sendStatus(201);
@@ -52,7 +26,38 @@ const postProduct = async (req, res) => {
   }
 };
 
+const deleteProduct = async (req, res) => {
+  try {
+    const product = req.params._id;
+    const data = await productsService.deleteProduct(product);
+    res.status(200).json({ success: true, result: product });
+    if (data?.error)
+      return res.status(data.error.status).json(data.error.message);
+    res.sendStatus(201);
+  } catch (error) {
+    logger.error(`Se produjo un error al eliminar el producto ${error}`);
+  }
+};
+
+const updateProduct = async (req, res) => {
+  try {
+    const _id = req.params._id;
+    const product = req.body;
+    const data = await productsService.updateProduct(_id, product);
+
+    res.status(200).json({ success: true, id: _id, result: product });
+
+    if (data?.error)
+      return res.status(data.error.status).json(data.error.message);
+    res.sendStatus(201);
+  } catch (error) {
+    logger.error(`Se produjo un error al editar un producto ${error}`);
+  }
+};
+
 export default {
-  postProduct,
   getAll,
+  postProduct,
+  deleteProduct,
+  updateProduct,
 };

@@ -80,6 +80,8 @@ setTimeout(function(){ location.href = '/'},2000)
 
 router.post('/api/productos', productsController.postProduct);
 router.get('/api/productos', productsController.getAll);
+router.delete('/api/productos/:_id', productsController.deleteProduct);
+router.put('/api/productos/:_id', productsController.updateProduct);
 
 /* Carrito */
 router.post('/api/carrito/:_id', cartsController.createCart);

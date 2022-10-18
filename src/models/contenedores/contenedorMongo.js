@@ -24,6 +24,19 @@ export class ContenedorMongo extends MongoClient {
     }
   }
 
+  async delete(id) {
+    try {
+      await this.db.connect();
+
+      const res = await this.model.deleteOne({ id });
+      return res;
+    } catch (error) {
+      logger.error(`error eliminando ${this.collection}: ${error}`);
+    } finally {
+      await this.db.discconect();
+    }
+  }
+
   async getUser(username) {
     try {
       //Tiene que estar siempre conectado por passport?
@@ -74,9 +87,10 @@ export class ContenedorMongo extends MongoClient {
   async updateOne(id, NewDataObj) {
     try {
       await this.db.connect();
+      NewDataObj.timestamp = Date.now();
       await this.model.updateOne({ _id: id }, { $set: NewDataObj });
     } catch (error) {
-      logger.error(`error in updating ${this.collection}: ${error}`);
+      logger.error(`error updating ${this.collection}: ${error}`);
       return {
         error: { message: `error in updating ${this.collection}`, status: 500 },
       };

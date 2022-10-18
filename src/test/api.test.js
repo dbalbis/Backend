@@ -34,21 +34,22 @@ describe('test sobre API RESTFUL', () => {
       expect(res.body.data).to.be.an('object');
     });
   });
-
+  /* PONER EL ID A MANO */
   describe('metodo DELETE para eliminar producto', () => {
     it('debería devolver un id con el producto eliminado y un status 200', async () => {
       const res = await request.delete(
-        '/api/productos/634e2929a04d273d9ddd615a'
+        '/api/productos/634e3dac4307dbdfed0ca0ba'
       );
 
       expect(res.status).to.eql(200);
     });
   });
+  /* PONER EL ID A MANO */
   describe('metodo PUT para actualizar un producto', () => {
     const productoRandom = productGenerator.get();
     it('debería devolver un status 200', async () => {
       const res = await request
-        .put('/api/productos/634e2929a04d273d9ddd615a')
+        .put('/api/productos/634e3e77b89b34763c2f946e')
         .send(productoRandom);
 
       expect(res.status).to.eql(200);

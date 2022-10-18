@@ -323,3 +323,9 @@
 [ERROR] | 18-10-2022 02:29 | pid: 12960: Se produjo un error al editar un producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
 [ERROR] | 18-10-2022 02:30 | pid: 12084: Se produjo un error al eliminar el producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
 [ERROR] | 18-10-2022 02:30 | pid: 12084: Se produjo un error al editar un producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 02:46 | pid: 15584: Se produjo un error al agregar un producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 02:48 | pid: 14064: Se produjo un error al eliminar el producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 02:48 | pid: 14064: Se produjo un error al editar un producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 02:49 | pid: 14064: Se produjo un error al agregar un producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 02:50 | pid: 6628: Se produjo un error al editar un producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 02:50 | pid: 960: Se produjo un error al editar un producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client

@@ -269,3 +269,57 @@
 [ERROR] | 18-10-2022 00:30 | pid: 13672: Se produjo un error al obtener los productos Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
 [ERROR] | 18-10-2022 00:31 | pid: 12380: Se produjo un error al eliminar el producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
 [ERROR] | 18-10-2022 00:31 | pid: 12380: Se produjo un error al obtener los productos Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 00:50 | pid: 15976: Se produjo un error al obtener los productos Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 00:54 | pid: 15976: Se produjo un error al obtener los productos Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 00:56 | pid: 15976: Se produjo un error al obtener los productos Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 00:57 | pid: 7344: Se produjo un error al agregar un producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 00:58 | pid: 12576: Se produjo un error al agregar un producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 00:59 | pid: 7740: Se produjo un error al agregar un producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 01:00 | pid: 11776: Se produjo un error al agregar un producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 01:03 | pid: 7328: error eliminando productv3: MongoExpiredSessionError: Cannot use a session that has ended
+[ERROR] | 18-10-2022 01:03 | pid: 7328: Se produjo un error al eliminar el producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 01:03 | pid: 7328: Se produjo un error al eliminar el producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 01:03 | pid: 7328: Se produjo un error al eliminar el producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 01:04 | pid: 1332: Se produjo un error al eliminar el producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 01:06 | pid: 3900: Se produjo un error al eliminar el producto TypeError: Cannot read properties of undefined (reading 'json')
+[ERROR] | 18-10-2022 01:07 | pid: 11968: Se produjo un error al eliminar el producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 01:09 | pid: 6000: Se produjo un error al eliminar el producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 01:10 | pid: 15348: Se produjo un error al agregar un producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 01:11 | pid: 8556: Se produjo un error al eliminar el producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 01:13 | pid: 12744: Se produjo un error al eliminar el producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 01:14 | pid: 15500: Se produjo un error al eliminar el producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 01:15 | pid: 16108: error agregando productv3: MongoExpiredSessionError: Cannot use a session that has ended
+[ERROR] | 18-10-2022 01:15 | pid: 16108: Se produjo un error al agregar un producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 01:15 | pid: 16108: Se produjo un error al agregar un producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 01:15 | pid: 16108: Se produjo un error al agregar un producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 01:16 | pid: 12304: Se produjo un error al eliminar el producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 01:18 | pid: 2472: error agregando productv3: MongoExpiredSessionError: Cannot use a session that has ended
+[ERROR] | 18-10-2022 01:18 | pid: 2472: error agregando productv3: MongoExpiredSessionError: Cannot use a session that has ended
+[ERROR] | 18-10-2022 01:18 | pid: 2472: Se produjo un error al agregar un producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 01:18 | pid: 2472: Se produjo un error al agregar un producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 01:18 | pid: 2472: Se produjo un error al agregar un producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 01:18 | pid: 2472: Se produjo un error al agregar un producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 01:19 | pid: 14136: error agregando productv3: MongoExpiredSessionError: Cannot use a session that has ended
+[ERROR] | 18-10-2022 01:19 | pid: 14136: error agregando productv3: MongoExpiredSessionError: Cannot use a session that has ended
+[ERROR] | 18-10-2022 01:20 | pid: 8428: Se produjo un error al agregar un producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 01:21 | pid: 2336: Se produjo un error al eliminar el producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 01:22 | pid: 14896: Se produjo un error al editar un producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 01:23 | pid: 13012: Se produjo un error al editar un producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 01:23 | pid: 12652: error in updating productv3: CastError: Cast to ObjectId failed for value "634e215" (type string) at path "_id" for model "productv3"
+[ERROR] | 18-10-2022 01:23 | pid: 12652: Se produjo un error al editar un producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 01:24 | pid: 9976: error in updating productv3: CastError: Cast to ObjectId failed for value "634e215" (type string) at path "_id" for model "productv3"
+[ERROR] | 18-10-2022 01:24 | pid: 9976: Se produjo un error al editar un producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 01:25 | pid: 11912: Se produjo un error al editar un producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 01:30 | pid: 11340: Se produjo un error al agregar un producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 02:24 | pid: 2232: Se produjo un error al eliminar el producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 02:24 | pid: 14988: Se produjo un error al eliminar el producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 02:27 | pid: 13512: Se produjo un error al eliminar el producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 02:27 | pid: 15944: Se produjo un error al eliminar el producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 02:28 | pid: 15444: Se produjo un error al eliminar el producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 02:28 | pid: 15444: Se produjo un error al editar un producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 02:29 | pid: 9060: Se produjo un error al eliminar el producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 02:29 | pid: 9060: Se produjo un error al editar un producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 02:29 | pid: 12960: Se produjo un error al eliminar el producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 02:29 | pid: 12960: Se produjo un error al editar un producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 02:30 | pid: 12084: Se produjo un error al eliminar el producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 18-10-2022 02:30 | pid: 12084: Se produjo un error al editar un producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client

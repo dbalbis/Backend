@@ -7,7 +7,7 @@ Test.getAllProducts();
 //Test.postProduct();
 
 /* Funcion para modificar Producto */
-//Test.updateProduct('634e1d5d2a4dacbed93a403a');
+//Test.updateProduct('634e29805ff74107872bbb05');
 
 /* Funcion para elminar un producto */
-//Test.deleteProduct('634e1d5d2a4dacbed93a403a');
+//Test.deleteProduct('634e2929a04d273d9ddd6159');

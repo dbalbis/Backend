@@ -7,7 +7,7 @@ import logger from '../utils/logger.js';
 const getAll = async (req, res) => {
   try {
     const data = await productsService.getAll();
-    res.json({ data }).sendStatus(200);
+    res.status(200).json({ data });
   } catch (error) {
     logger.error(`Se produjo un error al obtener los productos ${error}`);
   }
@@ -30,7 +30,7 @@ const deleteProduct = async (req, res) => {
   try {
     const product = req.params._id;
     const data = await productsService.deleteProduct(product);
-    res.status(200).json({ success: true, result: product });
+    res.status(200).json({product})
     if (data?.error)
       return res.status(data.error.status).json(data.error.message);
     res.sendStatus(201);

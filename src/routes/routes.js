@@ -10,6 +10,8 @@ import path from 'path';
 import passport from 'passport';
 import { checkAuth, checkAuthLogout, checkAuthNo } from '../utils/checkauth.js';
 import cartsController from '../controllers/cartsController.js';
+import graphqlRouter from './graphql.router.js';
+
 export const __filename = fileURLToPath(import.meta.url);
 export const __dirname = path.dirname(__filename);
 
@@ -75,6 +77,10 @@ setTimeout(function(){ location.href = '/'},2000)
 </script>`);
   });
 });
+
+/* GraphQL */
+
+router.use('/api/graphql', graphqlRouter);
 
 /* Productos */
 

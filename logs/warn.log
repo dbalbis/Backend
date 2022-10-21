@@ -329,3 +329,8 @@
 [ERROR] | 18-10-2022 02:49 | pid: 14064: Se produjo un error al agregar un producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
 [ERROR] | 18-10-2022 02:50 | pid: 6628: Se produjo un error al editar un producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
 [ERROR] | 18-10-2022 02:50 | pid: 960: Se produjo un error al editar un producto Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+[ERROR] | 21-10-2022 01:55 | pid: 10988: Se produjo un error al obtener los productos TypeError: res.status is not a function
+[ERROR] | 21-10-2022 02:44 | pid: 424: Se produjo un error al eliminar el producto ReferenceError: product is not defined
+[ERROR] | 21-10-2022 02:52 | pid: 11700: error eliminando productv3: ObjectParameterError: Parameter "filter" to deleteOne() must be an object, got 635232f79f3b1859c48c1845
+[ERROR] | 21-10-2022 02:53 | pid: 11700: error eliminando productv3: ObjectParameterError: Parameter "filter" to deleteOne() must be an object, got 635232f79f3b1859c48c1845
+[ERROR] | 21-10-2022 02:53 | pid: 5668: error eliminando productv3: TypeError: this.model.deleteById is not a function

@@ -28,8 +28,7 @@ export class ContenedorMongo extends MongoClient {
     try {
       await this.db.connect();
 
-      const res = await this.model.deleteOne({ id });
-      return res;
+      await this.model.deleteOne({ _id: id });
     } catch (error) {
       logger.error(`error eliminando ${this.collection}: ${error}`);
     } finally {
@@ -72,8 +71,8 @@ export class ContenedorMongo extends MongoClient {
   async getAll() {
     try {
       await this.db.connect();
-      const data = await this.model.find().lean();
-      return { data };
+      const data = await this.model.find();
+      return data;
     } catch (error) {
       logger.warn(`error in getting ${this.collection}: ${error}`);
       return {
@@ -88,7 +87,11 @@ export class ContenedorMongo extends MongoClient {
     try {
       await this.db.connect();
       NewDataObj.timestamp = Date.now();
-      await this.model.updateOne({ _id: id }, { $set: NewDataObj });
+      const data = await this.model.updateOne(
+        { _id: id },
+        { $set: NewDataObj }
+      );
+      return data;
     } catch (error) {
       logger.error(`error updating ${this.collection}: ${error}`);
       return {
@@ -103,7 +106,7 @@ export class ContenedorMongo extends MongoClient {
     try {
       await this.db.connect();
       const data = await this.model.findOne({ _id: id });
-      if (data) return { data };
+      if (data) return data;
       return {
         error: { message: `no ${this.collection} with ID: ${id}`, status: 404 },
       };

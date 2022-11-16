@@ -24,4 +24,4 @@ productsModel = productsModelDaoMongo;
 cartsModel = cartsModelDaoMongo;
 checkoutModel = checkoutModelDaoMongo;
 
-export { usersModel, messagesModel, productsModel, cartsModel };
+export { usersModel, messagesModel, productsModel, cartsModel, checkoutModel };

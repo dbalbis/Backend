@@ -30,7 +30,9 @@ const createCart = async (req, res) => {
     } else {
       res
         .status(401)
-        .json({ message: `Para crear un carrito debes estar logeado! POST /login` });
+        .json({
+          message: `Para crear un carrito debes estar logeado! POST /login`,
+        });
     }
   } catch (error) {
     console.log(error);
@@ -50,7 +52,10 @@ const getCart = async (req, res) => {
         if (cart.productos.length === 0) {
           res
             .status(400)
-            .json({ message: 'Tu carrito esta vacio! Carga algun producto. POST /carrito/productos' });
+            .json({
+              message:
+                'Tu carrito esta vacio! Carga algun producto. POST /carrito/productos',
+            });
         } else {
           if (cart) {
             res.status(200).json({ message: 'Este es tu carrito!.', cart });
@@ -64,7 +69,9 @@ const getCart = async (req, res) => {
     } else {
       res
         .status(401)
-        .json({ message: `Para ver tu carrito debes estar logeado! POST /login` });
+        .json({
+          message: `Para ver tu carrito debes estar logeado! POST /login`,
+        });
     }
   } catch (error) {
     console.log(error);
@@ -101,6 +108,7 @@ const addProduct = async (req, res) => {
               if (prod._id == idProd) return prodInCart;
               return prod;
             });
+        
             await cartService.update(cartId, { productos });
             res
               .status(200)

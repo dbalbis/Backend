@@ -1,10 +1,20 @@
-const createOrder = async (cart, email) => {
+import { checkoutModel } from '../models/index.js';
+
+const createOrder = async (email, productos) => {
   try {
-    console.log(cart, email);
-    /*     const res = await productsModel.add(data);
-    return res; */
+    const res = await checkoutModel.add({ email, productos });
+    return res;
   } catch (error) {
     throw error;
   }
 };
-export default { createOrder };
+
+const getByEmail = async (email) => {
+  try {
+    const res = await checkoutModel.getByEmail(email);
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};
+export default { createOrder, getByEmail };

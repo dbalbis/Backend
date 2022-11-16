@@ -1,0 +1,51 @@
+<div class='container productosContainer'>
+  <h2>Info Config</h2>
+
+  <table class='table tableContainer'>
+    <thead>
+      <tr>
+        <th scope='col'>Puerto</th>
+        <th scope='col'>URL Mongo</th>
+        <th scope='col'>Secret Mongo</th>
+        <th scope='col'>Test Mail</th>
+        <th scope='col'>Pass Mail</th>
+      </tr>
+    </thead>
+
+    <tr>
+      <td>{{this.config.PORT}}</td>
+      <td>{{this.config.URLMONGO}}</td>
+      <td>{{this.config.SECRETMONGO}}</td>
+      <td>{{this.config.TEST_MAIL}}</td>
+      <td>{{this.config.PASS_MAIL}}</td>
+
+    </tr>
+
+  </table>
+  <table class='table tableContainer'>
+    <h2>Process Info</h2>
+    <thead>
+      <tr>
+
+        <th scope='col'>Plataforma</th>
+        <th scope='col'>Node Version</th>
+        <th scope='col'>Memoria Reservada</th>
+        <th scope='col'>Path</th>
+        <th scope='col'>Process ID</th>
+        <th scope='col'>Folder</th>
+      </tr>
+    </thead>
+
+    <tr>
+      <td>{{this.info.platform}}</td>
+      <td>{{this.info.version}}</td>
+      <td>{{this.info.rss}}</td>
+      <td>{{this.info.path}}</td>
+      <td>{{this.info.pid}}</td>
+      <td>{{this.info.folder}}</td>
+
+    </tr>
+
+  </table>
+
+</div>

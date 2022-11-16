@@ -2,7 +2,7 @@ import { Router } from 'express';
 import registerRouter from './register.router.js';
 import loginRouter from './login.router.js';
 import logoutRouter from './logout.router.js';
-import indexRouter from './index.router.js';
+import configRouter from './config.router.js';
 import chatRouter from './chat.router.js';
 import productosRouter from './productos.router.js';
 import cartRouter from './cart.router.js';
@@ -11,7 +11,7 @@ import checkoutRouter from './checkout.router.js';
 const router = Router();
 
 /* Index */
-router.use('/', indexRouter);
+router.use('/', configRouter);
 /* Register */
 router.use('/register', registerRouter);
 /* Login */

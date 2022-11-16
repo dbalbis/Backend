@@ -9,12 +9,27 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 import { Server as IOServer } from 'socket.io';
 import chatController from './controllers/chatController.js';
+import { engine } from 'express-handlebars';
 const app = express();
 export const __filename = fileURLToPath(import.meta.url);
 export const __dirname = path.dirname(__filename);
 app.use(express.static(`${__dirname}/public`));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+/* CONFIG HBS */
+
+app.engine(
+  'hbs',
+  engine({
+    extname: '.hbs',
+    defaultLayout: path.join(__dirname + '/views/layouts/main.hbs'),
+    layoutsDir: path.join(__dirname, '/views/layouts'),
+    partialsDir: path.join(__dirname, '/views/partials'),
+  })
+);
+app.set('views', path.join(__dirname, '/views'));
+app.set('view engine', 'hbs');
 
 /* Server */
 

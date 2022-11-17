@@ -10,7 +10,7 @@ import checkoutRouter from './checkout.router.js';
 
 const router = Router();
 
-/* Index */
+/* Index con vistas de la config */
 router.use('/', configRouter);
 /* Register */
 router.use('/register', registerRouter);

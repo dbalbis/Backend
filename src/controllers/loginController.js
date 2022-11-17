@@ -3,6 +3,7 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import { usersModel } from '../models/index.js';
 import { isValidPassword } from '../utils/hashPassword.js';
 import { fileURLToPath } from 'url';
+import logger from '../utils/logger.js';
 import path from 'path';
 export const __filename = fileURLToPath(import.meta.url);
 export const __dirname = path.dirname(__filename);
@@ -37,7 +38,7 @@ const postLogin = async (req, res) => {
       .status(200)
       .json({ message: `Login exitoso, Bienvenido ${req.body.username}!` });
   } catch (error) {
-    console.log(error);
+    logger.error(error);
   }
 };
 

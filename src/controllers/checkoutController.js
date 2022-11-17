@@ -1,6 +1,7 @@
 import cartService from '../services/cart.services.js';
 import usersService from '../services/users.services.js';
 import checkoutService from '../services/checkout.services.js';
+import logger from '../utils/logger.js';
 import config from '../config.js';
 import mailer from '../utils/mailer.js';
 
@@ -27,21 +28,21 @@ const postCheckout = async (req, res) => {
             try {
               await checkoutService.createOrder(req.user.email, cart.productos);
             } catch (error) {
-              console.log('Error creando la orden', error);
+              logger.error('Error creando la orden', error);
             }
 
             /* Vaciamos el carrito */
             try {
               await cartService.update(cartId, { productos: [] });
             } catch (error) {
-              console.log('Error vaciando el carrito', error);
+              logger.error('Error vaciando el carrito', error);
             }
 
             /* Actualizamos el estado de carrito del user (cart: "") */
             try {
               await usersService.update(userId, { cart: '' });
             } catch (error) {
-              console.log('Error actualizando el estado del carrito', error);
+              logger.error('Error actualizando el estado del carrito', error);
             }
 
             //Envío de mail al nuevo usuario.
@@ -75,7 +76,7 @@ const postCheckout = async (req, res) => {
             try {
               await mailer.sendMail(mailOptions);
             } catch (error) {
-              console.log('error con el envio de email', error);
+              logger.error('error con el envio de email', error);
             }
 
             res
@@ -94,7 +95,7 @@ const postCheckout = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
+    logger.error(error);
   }
 };
 
@@ -117,7 +118,7 @@ const getOrder = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log('Hubo un error', error);
+    logger.error('Hubo un error', error);
   }
 };
 

@@ -2,6 +2,7 @@ import config from '../config.js';
 import { hashPassword } from '../utils/hashPassword.js';
 import userService from '../services/users.services.js';
 import mailer from '../utils/mailer.js';
+import logger from '../utils/logger.js';
 
 const postRegister = async (req, res) => {
   try {
@@ -48,7 +49,7 @@ const postRegister = async (req, res) => {
             try {
               await mailer.sendMail(mailOptions);
             } catch (error) {
-              console.log('error con el envio de email', error);
+              logger.error('error con el envio de email', error);
             }
             res
               .status(200)
@@ -62,7 +63,7 @@ const postRegister = async (req, res) => {
       res.status(401).json({ message: `Ya estas logeado!` });
     }
   } catch (error) {
-    console.log(error);
+    logger.error(error);
   }
 };
 

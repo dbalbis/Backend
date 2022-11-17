@@ -1,9 +1,10 @@
 import mongoose from 'mongoose';
 import config from '../../config.js';
+import logger from "../../utils/logger.js"
 
 mongoose.connect(config.URLMONGO, (err, res) => {
   if (err) throw err;
-  return console.log('Base de datos MONGO conectada.');
+  return logger.info('Base de datos MONGO conectada.');
 });
 
 export class contenedorMongo {
@@ -18,7 +19,7 @@ export class contenedorMongo {
       const res = await this.model.find();
       return res;
     } catch (error) {
-      console.log(`error buscando ${this.collection}: ${error}`);
+      logger.error(`error buscando ${this.collection}: ${error}`);
     }
   }
 
@@ -28,7 +29,7 @@ export class contenedorMongo {
       const res = await this.model.create(data);
       return res;
     } catch (error) {
-      console.log(`error agregando ${this.collection}: ${error}`);
+      logger.error(`error agregando ${this.collection}: ${error}`);
     }
   }
 
@@ -37,7 +38,7 @@ export class contenedorMongo {
       const res = await this.model.updateOne({ _id: id }, { $set: NewDataObj });
       return res;
     } catch (error) {
-      console.log(`error modificando ${this.collection}: ${error}`);
+      logger.error(`error modificando ${this.collection}: ${error}`);
     }
   }
 
@@ -46,7 +47,7 @@ export class contenedorMongo {
       const res = await this.model.deleteOne({ _id: id });
       return res;
     } catch (error) {
-      console.log(`error eliminando ${this.collection}: ${error}`);
+      logger.error(`error eliminando ${this.collection}: ${error}`);
     }
   }
 
@@ -59,7 +60,7 @@ export class contenedorMongo {
         return null;
       }
     } catch (error) {
-      console.log('Error buscando los mensajes', error);
+      logger.error('Error buscando los mensajes', error);
     }
   }
 
@@ -75,7 +76,7 @@ export class contenedorMongo {
         return null;
       }
     } catch (error) {
-      console.log('Error obteniendo el usuario', error);
+      logger.error('Error obteniendo el usuario', error);
     }
   }
 
@@ -91,7 +92,7 @@ export class contenedorMongo {
         return null;
       }
     } catch (error) {
-      console.log('Error buscando los mensajes', error);
+      logger.error('Error buscando los mensajes', error);
     }
   }
 
@@ -106,7 +107,7 @@ export class contenedorMongo {
       const res = await this.model.create(newMessage);
       return res;
     } catch (error) {
-      console.log(`error agregando ${this.collection}: ${error}`);
+      logger.error(`error agregando ${this.collection}: ${error}`);
     }
   }
 
@@ -122,7 +123,7 @@ export class contenedorMongo {
         return null;
       }
     } catch (error) {
-      console.log('Error buscando los productos de la categoria', error);
+      logger.error('Error buscando los productos de la categoria', error);
     }
   }
 }

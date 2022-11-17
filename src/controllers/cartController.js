@@ -1,6 +1,7 @@
 import cartService from '../services/cart.services.js';
 import usersService from '../services/users.services.js';
 import productService from '../services/product.services.js';
+import logger from '../utils/logger.js';
 
 const createCart = async (req, res) => {
   try {
@@ -26,7 +27,7 @@ const createCart = async (req, res) => {
           message:
             'El usuario ya tiene un carrito creado, agregale productos! POST /carrito/productos',
         });
-      }
+      }res
     } else {
       res
         .status(401)
@@ -35,7 +36,7 @@ const createCart = async (req, res) => {
         });
     }
   } catch (error) {
-    console.log(error);
+    logger.error(error);
   }
 };
 
@@ -74,7 +75,7 @@ const getCart = async (req, res) => {
         });
     }
   } catch (error) {
-    console.log(error);
+    logger.error(error);
   }
 };
 
@@ -122,7 +123,7 @@ const addProduct = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
+    logger.error(error);
   }
 };
 
@@ -161,7 +162,7 @@ const removeProduct = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
+    logger.error(error);
   }
 };
 

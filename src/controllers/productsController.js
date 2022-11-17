@@ -1,4 +1,5 @@
 import productServices from '../services/product.services.js';
+import logger from '../utils/logger.js';
 
 const getAllProducts = async (req, res) => {
   try {
@@ -11,7 +12,7 @@ const getAllProducts = async (req, res) => {
         .json({ message: 'Todavia no tenemos productos! Carga alguno.' });
     }
   } catch (error) {
-    console.log(error);
+    logger.error(error);
   }
 };
 
@@ -27,7 +28,7 @@ const getById = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
+    logger.error(error);
   }
 };
 
@@ -43,7 +44,7 @@ const getByCategory = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
+    logger.error(error);
   }
 };
 
@@ -58,7 +59,7 @@ const addProduct = async (req, res) => {
       res.status(200).json({ message: 'Producto agregado con exito!', data });
     }
   } catch (error) {
-    console.log(error);
+    logger.error(error);
   }
 };
 
@@ -75,7 +76,7 @@ const updateProduct = async (req, res) => {
       res.status(200).json({ message: 'Producto editado con exito!', data });
     }
   } catch (error) {
-    console.log(error);
+    logger.error(error);
   }
 };
 
@@ -91,7 +92,7 @@ const deleteProduct = async (req, res) => {
       res.status(200).json({ message: 'Producto eliminado con exito!', data });
     }
   } catch (error) {
-    console.log(error);
+    logger.error(error);
   }
 };
 

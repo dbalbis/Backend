@@ -5,6 +5,7 @@ import session from 'express-session';
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
 import MongoStore from 'connect-mongo';
+import logger from './utils/logger.js';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import { Server as IOServer } from 'socket.io';
@@ -35,9 +36,9 @@ app.set('view engine', 'hbs');
 
 const serverExpress = app.listen(config.PORT, (err) => {
   if (err) {
-    console.log(`Se produjo un error al iniciar el servidor: ${err}`);
+    logger.error(`Se produjo un error al iniciar el servidor: ${err}`);
   } else {
-    console.log(`Servidor escuchando puerto: ${config.PORT}`);
+    logger.info(`Servidor escuchando puerto: ${config.PORT}`);
   }
 });
 
@@ -46,7 +47,7 @@ const serverExpress = app.listen(config.PORT, (err) => {
 const io = new IOServer(serverExpress);
 
 io.on('connection', async (socket) => {
-  console.log(`Se conecto un usuario: ${socket.id}`);
+  logger.info(`Se conecto un usuario: ${socket.id}`);
   const messages = await chatController.getAllMessages();
   io.emit('server:message', messages);
 

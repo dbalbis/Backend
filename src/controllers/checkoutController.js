@@ -38,13 +38,6 @@ const postCheckout = async (req, res) => {
               logger.error('Error vaciando el carrito', error);
             }
 
-            /* Actualizamos el estado de carrito del user (cart: "") */
-            try {
-              await usersService.update(userId, { cart: '' });
-            } catch (error) {
-              logger.error('Error actualizando el estado del carrito', error);
-            }
-
             //Envío de mail al nuevo usuario.
             const mailOptions = {
               from: config.TEST_MAIL,

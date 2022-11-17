@@ -2,7 +2,7 @@ const socket = io();
 const form = document.getElementById('form');
 const email = document.getElementById('email');
 const input = document.getElementById('input');
-import logger from "../utils/logger.js"
+
 
 form.addEventListener('submit', function (e) {
   e.preventDefault();
@@ -33,6 +33,6 @@ async function renderMessages(messages) {
 
     messagesPool.innerHTML = html;
   } catch (error) {
-    logger.error('Hubo un error', error);
+    console.log('Hubo un error', error);
   }
 }

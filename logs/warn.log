@@ -1,1 +1,5 @@
 [ERROR] | 16-11-2022 23:24 | pid: 2404: error agregando usersFINAL: MongoServerError: E11000 duplicate key error collection: db.usersfinals index: username_1 dup key: { username: "Diego" }
+[ERROR] | 17-11-2022 00:50 | pid: 4492: error agregando productsFINAL: ValidationError: category: Path `category` is required., price: Path `price` is required., title: Path `title` is required.
+[ERROR] | 17-11-2022 00:55 | pid: 4492: Error buscando los mensajes Cast to ObjectId failed for value "6375afd302f8d083c0ec5652s" (type string) at path "_id" for model "productsFINAL"
+[ERROR] | 17-11-2022 00:56 | pid: 4492: error modificando productsFINAL: CastError: Cast to ObjectId failed for value "6375afd302f8d083c0ec5652s" (type string) at path "_id" for model "productsFINAL"
+[ERROR] | 17-11-2022 00:58 | pid: 4492: Error buscando los mensajes Cast to ObjectId failed for value "Medias" (type string) at path "_id" for model "productsFINAL"
